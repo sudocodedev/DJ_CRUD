@@ -1,0 +1,35 @@
+{% load static %}
+{% load specfuncs %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <section class="header">
+        <h2>{{ post.title }}</h2>
+        <div class="user-details">
+            <div class="img-container"></div>
+            <h5>posted by @{{post.author}} on {{post.date_posted | date:"M, jS Y"}}</h5>
+            
+        </div>
+    </section>
+    <section class="taglist">
+        <ul>
+            {% with post.genre|tagSplit:"," as tags%}
+                {% for tag in tags %}
+                    <li>#{{ tag }}</li>
+                {%endfor%}
+            {% endwith %}
+        </ul>
+    </section>
+    <hr>
+    <section class="content">
+        <p>{{post.content}}</p>
+    </section>
+</body>
+</html>
