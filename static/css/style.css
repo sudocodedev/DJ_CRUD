@@ -1,0 +1,40 @@
+:root{
+    --text-color1:#333;
+    --text-color2:#fff;
+}
+
+*{
+    padding:0px;
+    margin:0px;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+
+.container {
+    height:100vh;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(4, 1fr);
+    grid-template-rows: .45fr repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.navbar { 
+    grid-area: 1 / 1 / 2 / 6; 
+    padding:10px;
+    background-color: blueviolet;
+}
+
+.sidebar { 
+    grid-area: 2 / 1 / 6 / 2; 
+    padding:10px;
+    background-color: coral;
+}
+
+.main { 
+    grid-area: 2 / 2 / 6 / 6; 
+    padding:10px;
+    background-color: darkgrey;
+}
