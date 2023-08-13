@@ -14,3 +14,5 @@ class post(models.Model):
     def __str__(self) -> str:
         return f"{self.title}--{self.author}"
 
+    class Meta:
+       ordering=["-date_modified","-date_posted"] 

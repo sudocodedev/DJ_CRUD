@@ -1,9 +1,16 @@
 {% load static %}
 
 <div class="main">
+    {% for post in posts %}
     <div class="card">
-        <h2 class="title">{{posts.title}}</h2>
-
-        <p class="content"></p>
+        <h2 class="title">{{ post.title }}</h2>
+        <span class='author'><strong>{{ post.author }}</strong></span>
+        <span class='date-posted'>{{ post.date_posted }}</span>
+        <span class="genre"><strong>{{ post.genre }}</strong></span>
+        <span class="ratings">{{ post.ratings }}</span>
+        <hr>
+        <p class="content">{{ post.content|truncatewords:51 }}</p>
+        <h5 class="date-modified">{{ post.date_modified }}</h5>
     </div>
+    {% endfor %}
 </div>
