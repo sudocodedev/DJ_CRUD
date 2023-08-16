@@ -1,0 +1,27 @@
+*{
+    margin:0;
+    padding:0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+img{
+    width:100%;
+}
+
+.page .wrapper{
+    height:100px;
+    width:100px;
+}
+
+.container{
+    height: 100vh;
+    width:100%;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

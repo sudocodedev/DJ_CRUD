@@ -2,28 +2,25 @@
 
 <div class="main">
     {% for post in posts %}
-    <div class="card">
-        <div class="image"><i class="fa-solid fa-user"></i></div>
-        <h2 class="title"><a href="{% url 'detailed-post' post.id %}">{{ post.title }}</a></h2>
-        <span class='author'><strong>{{ post.author }}</strong></span>
-        <span class='date-posted'>{{ post.date_posted }}</span>
-        <span class="genre"><strong>{{ post.genre }}</strong></span>
-        <span class="ratings">{{ post.ratings }}</span>
+
+    <div class="card {% cycle 'color1' 'color2' 'color3' %}">
+        <div class="author-info grid">
+            <div class="image">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </div>
+            <div class="info-container">
+                <div class="author"><small>{{ post.author }}</small></div>
+                <div class="date-posted"><small>{{ post.date_posted | date:"M j,y" }}</small></div>
+            </div>
+        </div>
+        <h1 class="title">{{ post.title }}</h1>
+        <div class="post-details flex">
+            <div class="genre"><i class="fa-solid fa-tag"></i> {{ post.genre }}</div>       
+            <div class="rating"><i class="fa-solid fa-star"></i> {{post.ratings}}</div>
+        </div>
         <hr>
         <p class="content">{{ post.content|truncatewords:25 }}</p>
-        <h5 class="date-modified">{{ post.date_modified }}</h5>
-    </div> 
-
-    <!-- <div class="card">
-        <span class="image"><i class="fa-solid fa-user"></i></span>
-        <span class="title"><h2><a href="{% url 'detailed-post' post.id %}">{{ post.title }}</a></h2></span>
-        <h5 class='author'>@<strong>{{ post.author }}</strong></h5>
-        <span class="date-posted">{{post.date_posted | date:"jS M"}}</span>
-        <hr>
-        <span class="tags"><i class="fa-solid fa-tag"></i> {{ post.genre }}</span>
-        <span class="ratings"><i class="fa-solid fa-star"></i> {{ post.ratings }}</span>
-        <p class="content">{{ post.content|truncatewords:20 }}</p>
-        <button class="read-more" type="submit">Read More<i class="fa-solid fa-arrow-right"></i></button>
-    </div> -->
+        <button class="read-more" type="submit"><a href="{% url 'detailed-post' post.id %}">Read More <i class="fa-solid fa-arrow-right"></i></a></button>
+    </div>
     {% endfor %}
 </div>

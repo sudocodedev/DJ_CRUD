@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/authentication.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        {% if page == 'login' %}
+            <div class="page">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>    
+                {% endif %}
+                <br>
+                <h2>Sign in to CRUD⚡</h2>
+                <small>Login here using your username and password</small>
+                <div class="wrapper"><img src="{% static 'img/login.png' %}" alt="logo"></div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <label>Your Username</label>
+                    <input type="text" name="username" placeholder="Your Username">
+                    <label>Your Password</label>
+                    <input type="password" name="password" placeholder="Password">
+                    <button type="submit">Login</button>
+                </form>
+                <div class="signup">Not Registered?  <strong><a href="{% url 'register-page' %}">Create account</a></strong></div>
+            </div>
+        {% else %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_div }}
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="sigin">Already have an account? <strong><a href="{% url 'login-page' %}">Login</a></strong></div>
+        {% endif %}
+    </div>
+</body>
+</html>

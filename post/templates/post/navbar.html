@@ -1,5 +1,18 @@
 {% load static %}
 
 <div class="navbar">
-    helloworld
+    <h2 class="header">CRUD</h2>
+    <div class="nav">
+        <form class="search" action="posts/" method='GET'>
+            <button type="submit"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+            <input type="text" name="q" id="searchbar" placeholder="search for posts...">
+        </form>
+        <button type="submit" class="login">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout-page' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login-page' %}">Login</a>
+        {% endif %}
+        </button>
+    </div>
 </div>

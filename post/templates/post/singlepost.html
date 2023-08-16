@@ -8,20 +8,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'css/singlePage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/singlePage.css' %}">
+    <script type="text/javascript" src="{% static 'js/script.js' %}" defer ></script>
     <title>{{ post.title }}</title>
 </head>
 <body>
-    <button class="back" type="submit"><a href="{% url 'post-page' %}" >BACK</a></button>
+    <!-- Modal -->
+    <div class="bg-modal">
+        <div class="modal-content">
+            <div class="close">+</div>
+            <h1>Do you want to delete {{ post.title }}?</h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="inline-block"><a href="{% url 'delete-post' post.id %}">Delete</a></button>
+                <div class="inline-block"><a href="{{ request.META.HTTP_REFERER }}">Cancel</a></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- post content -->
+    <button class="back" type="submit"><a href="{% url 'post-page' %}" >Back</a></button>
     <section class="header">
         <h2>{{ post.title }}</h2>
         <div class="user-details">
             <div class="img-container">IMG</div>
             <h5>posted by @{{post.author}} on {{post.date_posted | date:"M, jS Y"}}</h5>
-            <div class="operations">
-                <div class="edit"><i class="fa-regular fa-pen-to-square"></i></div>
-                <div class="delete"><i class="fa-solid fa-trash"></i></div>
-            </div>    
+            {% if request.user == post.author %}
+                <div class="operations">
+                    <div class="edit inline-block"><button type="submit"><a href="{% url 'update-post' post.id %}"><i class="fa-regular fa-pen-to-square"></i></a></button></div>
+                    <div class="delete inline-block"><i class="fa-solid fa-trash"></i></div>
+                </div>    
+            {% endif %}
         </div>
     </section>
     <section class="taglist">
