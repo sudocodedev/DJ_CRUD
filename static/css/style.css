@@ -118,7 +118,65 @@
 .sidebar { 
     grid-area: 2 / 1 / 6 / 2; 
     padding:10px;
-    /* background-color: coral; */
+}
+
+.sidebar-card{
+    background-color: #fff;
+    padding:12px 15px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.user-info{
+    margin-top: 10px;
+}
+
+.user-info hr, 
+.user-info small, 
+.user-info hr {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.topics-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.controls h3,
+.controls hr{
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.topics h3,
+.topics hr{
+    margin-bottom: 10px;
+    margin-top: 4px;
+}
+
+.topic{
+    background-color: rgb(185, 185, 185);
+    border-radius: 10px;
+    padding: 5px 8px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.6);    
+}
+
+.topic a{
+    color: #000;
+}
+
+.controls button{
+    background-color: rgb(75, 75, 177);
+    padding: 10px 12.5px;
+    color: #fff;
+    outline: none;
+    border-radius: 14px;
+    border: 1px solid rgb(1, 1, 78);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.6);    
 }
 
 /* main */
@@ -200,4 +258,24 @@ hr{
 
 .read-more a{
     color: var(--text-color2);
+}
+
+.post-create{
+    padding: 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: sticky;
+}
+
+.post-create button{
+    padding:10px 12px;
+    border-radius: 5px;
+    border: 2px solid rgb(32, 119, 32);
+    background-color: rgb(54, 231, 54);
+    font-size: 1rem;
+}
+
+.post-create button a{
+    color: #fff;
 }

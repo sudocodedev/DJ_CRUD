@@ -1,12 +1,18 @@
 {% load static %}
 
 <div class="main">
-    {% for post in posts %}
 
+    {% if request.user.is_authenticated %}
+    <div class="post-create">
+        <button type="submit"><a href="{% url 'create-post' %}"><i class="fa-solid fa-square-plus"></i> CREATE</a></button>
+    </div>
+    {% endif%}
+
+    {% for post in posts %}
     <div class="card {% cycle 'color1' 'color2' 'color3' %}">
         <div class="author-info grid">
             <div class="image">
-                <i class="fa-solid fa-user fa-xl"></i>
+                <i class="fa-solid fa-user fa-2xl"></i>
             </div>
             <div class="info-container">
                 <div class="author"><small>{{ post.author }}</small></div>
