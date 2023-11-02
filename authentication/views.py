@@ -3,22 +3,22 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.forms import UserCreationForm
-
+from .forms import userRegisterForm
 
 def registerUser(request):
-    form=UserCreationForm()
     if request.method == "POST":
-        form=UserCreationForm(request.POST)
+        # form=UserCreationForm(request.POST)
+        form=userRegisterForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
             user.username=user.username.lower()
             print("New account for {} has been created!".format(user.username))
             user.save()
+            login(request,user)
             return redirect('post-page')
     else:
-        messages.error(request,"Error occured, pls recheck the input once.")
-    
+        # form=UserCreationForm()
+        form=userRegisterForm()
     context={'form':form}
     return render(request,'authentication/authentication.html',context)
 

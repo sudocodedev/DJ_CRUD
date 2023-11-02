@@ -14,13 +14,6 @@
     <div class="container">
         {% if page == 'login' %}
             <div class="page">
-                <!-- {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>    
-                {% endif %} -->
                 <h2>Sign in to CRUD⚡</h2>
                 <small>Login here using your username and password</small>
                 <div class="wrapper"><img src="{% static 'img/login.png' %}" alt="logo"></div>
@@ -44,8 +37,26 @@
             <div class="wrapper"><img src="{% static 'img/signup.png' %}" alt="logo"></div>
             <form action="" method="POST">
                 {% csrf_token %}
-                {{ form.as_div }}
-                <br>
+                <div class="div">
+                    <label>Username</label>
+                    {{form.username}}
+                </div>
+                <div class="div">
+                    <label>Full Name</label>
+                    {{form.fullname}}
+                </div>
+                <div class="div">
+                    <label>Email Address</label>
+                    {{form.email}}
+                </div>
+                <div class="div">
+                    <label>Password</label>
+                    {{form.password1}}
+                </div>
+                <div class="div">
+                    <label>Confirm Password</label>
+                    {{form.password2}}
+                </div>
                 <button type="submit" class="btn">Sign Up</button>
             </form>
             <div class="signin">Already have an account? <strong><a href="{% url 'login-page' %}">Login</a></strong></div>

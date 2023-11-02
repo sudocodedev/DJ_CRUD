@@ -31,6 +31,7 @@ img{
     background-color: whitesmoke;
     border-radius: 25px;
     padding: 25px 30px;
+    box-shadow: 17px 13px 22px 5px rgba(0,0,0,0.1);
 }
 
 
@@ -78,7 +79,7 @@ h2 {
 }
 
 .signup{
-    margin: 8px 0;
+    margin: 12px 0;
     padding: 10px 0;
 }
 

@@ -5,13 +5,13 @@ from django.shortcuts import reverse
 from .models import post
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 #read all posts
 def postPage(request):
     try:
         #copy get request in a placeholder
         cache=request.GET
-        
         #getting the query parameters
         sort=cache.get('sort') if cache.get('sort') != None else ''
         search=cache.get('search') if cache.get('search') != None else ''
@@ -42,9 +42,12 @@ def createPost(request):
     if request.method=="POST":
         form=postForm(request.POST,request.FILES)
         if form.is_valid():
+            # t_user=User.objects.get(username__exact=request.user)
+            holder=form.save(commit=False)
+            holder.author=request.user
             name=form.cleaned_data['title']
             print("{} is created.".format(name))
-            form.save()
+            holder.save()
             return HttpResponseRedirect(reverse('post-page'))
     else:
         form=postForm()
