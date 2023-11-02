@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('posts/',views.postPage,name='post-page'),
@@ -8,3 +10,7 @@ urlpatterns = [
     path('delete-post/<int:postid>',views.deletePost,name='delete-post'),
     path('detailed-post/<int:postid>',views.detailedPost,name='detailed-post'),
 ]
+
+if settings.DEBUG:
+    urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+

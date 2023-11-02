@@ -8,6 +8,10 @@
     </div>
     {% endif%}
 
+    {% if post_count %}
+    <h5 class="search-result">Found {{ post_count }} post(s)...</h5>
+    {% endif %}
+    <br>
     {% for post in posts %}
     <div class="card {% cycle 'color1' 'color2' 'color3' %}">
         <div class="author-info grid">

@@ -7,6 +7,7 @@ class post(models.Model):
     author=models.ForeignKey(User,on_delete=models.CASCADE)
     genre=models.CharField(max_length=150)
     ratings=models.DecimalField(max_digits=3,decimal_places=2)
+    image=models.ImageField(upload_to='posts_images/',blank=True)
     content=models.TextField()
     date_posted=models.DateTimeField(default=timezone.now)
     date_modified=models.DateTimeField(auto_now=True)

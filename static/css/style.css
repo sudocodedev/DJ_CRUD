@@ -1,7 +1,6 @@
 :root{
     --text-color1:#333;
     --text-color2:#fff;
-    --button1:
 }
 
 *{
@@ -93,6 +92,10 @@
 
 .navbar .login a{
     color: #000;
+}
+
+.controls button a{
+    color: #fff;
 }
 
 ::placeholder{
@@ -202,7 +205,7 @@
 }
 
 .color3{
-    border-left: 5px solid rgb(71, 174, 214);
+    border-left: 5px solid rgb(210, 78, 250);
 }
 
 .card .title{
@@ -277,5 +280,9 @@ hr{
 }
 
 .post-create button a{
+    color: #fff;
+}
+
+.search-result {
     color: #fff;
 }

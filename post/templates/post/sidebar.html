@@ -13,27 +13,28 @@
     <div class="controls sidebar-card">
         <h3>Quick Actions</h3>
         <hr>
-        <button type="submit">ASC</button>
-        <button type="submit">DSC</button>
+        <button type="submit"><a href="{% url 'post-page' %}?sort=1">ASC</a></button>
+        <button type="submit"><a href="{% url 'post-page' %}?sort=-1">DSC</a></button>
     </div>
     <div class="topics sidebar-card">
         <h3>Browse topics</h3>
         <hr>
         <ul class="topics-list">
-            <li class="topic"><a href="">Ecchi</a></li>
-            <li class="topic"><a href="">Romance</a></li>
-            <li class="topic"><a href="">Action</a></li>
-            <li class="topic"><a href="">Comedy</a></li>
-            <li class="topic"><a href="">Horror</a></li>
-            <li class="topic"><a href="">Supernatural</a></li>
-            <li class="topic"><a href="">Thriller</a></li>
-            <li class="topic"><a href="">Fantasy</a></li>
-            <li class="topic"><a href="">History</a></li>
-            <li class="topic"><a href="">Fiction</a></li>
-            <li class="topic"><a href="">Mystery</a></li>
-            <li class="topic"><a href="">Sci-Fi</a></li>
-            <li class="topic"><a href="">Dark Comedy</a></li>
-            <li class="topic"><a href="">Historical</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}">All</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=ecchi">Ecchi</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=romance">Romance</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=action">Action</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=comedy">Comedy</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=horror">Horror</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=supernatural">Supernatural</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=thriller">Thriller</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=fantasy">Fantasy</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=history">History</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=fiction">Fiction</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=mystery">Mystery</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=sci-fi">Sci-Fi</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=dark">Dark Comedy</a></li>
+            <li class="topic"><a href="{% url 'post-page' %}?genre=historical">Historical</a></li>
         </ul>
     </div>
 </div>

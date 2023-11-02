@@ -3,9 +3,9 @@
 <div class="navbar">
     <h2 class="header">CRUD</h2>
     <div class="nav">
-        <form class="search" action="posts/" method='GET'>
+        <form class="search" action="" method='GET'>
             <button type="submit"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
-            <input type="text" name="q" id="searchbar" placeholder="search for posts...">
+            <input type="text" name="search" id="searchbar" placeholder="search for posts...">
         </form>
         <button type="submit" class="login">
         {% if request.user.is_authenticated %}

@@ -20,39 +20,47 @@
             <h1>Do you want to delete {{ post.title }}?</h1>
             <form action="" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="inline-block"><a href="{% url 'delete-post' post.id %}">Delete</a></button>
-                <div class="inline-block"><a href="{{ request.META.HTTP_REFERER }}">Cancel</a></div>
+                <button type="submit" class="confirm"><a href="{% url 'delete-post' post.id %}">Delete</a></button>
+                <div class="cancel"><a href="{{ request.META.HTTP_REFERER }}">Cancel</a></div>
             </form>
         </div>
     </div>
 
     <!-- post content -->
-    <button class="back" type="submit"><a href="{% url 'post-page' %}" >Back</a></button>
     <section class="header">
-        <h2>{{ post.title }}</h2>
-        <div class="user-details">
-            <div class="img-container">IMG</div>
-            <h5>posted by @{{post.author}} on {{post.date_posted | date:"M, jS Y"}}</h5>
+        <div class="post-img" style="background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('{{ post.image.url }}');">
+            <div class="back"><a href="{{ request.META.HTTP_REFERER }}"><i class="fa-solid fa-arrow-left fa-xl"></i></a></div>
+            <div class="post-details">
+                <h2>{{ post.title }}</h2>
+                <h5>posted by {{ post.author }} on {{ post.date_posted | date:"M, jS Y" }}</h5>
+            </div>
             {% if request.user == post.author %}
-                <div class="operations">
-                    <div class="edit inline-block"><button type="submit"><a href="{% url 'update-post' post.id %}"><i class="fa-regular fa-pen-to-square"></i></a></button></div>
-                    <div class="delete inline-block"><i class="fa-solid fa-trash"></i></div>
-                </div>    
+            <div class="operations">
+                <div class="edit inline-block"><a href="{% url 'update-post' post.id %}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                <div class="delete inline-block"><i class="fa-solid fa-trash fa-xl"></i></div>
+            </div>
             {% endif %}
         </div>
     </section>
+
     <section class="taglist">
-        <ul>
-            {% with post.genre|tagSplit:"," as tags%}
-                {% for tag in tags %}
-                    <li>#{{ tag }}</li>
-                {%endfor%}
-            {% endwith %}
-        </ul>
+        <div class="container">
+            <ul>
+                {% with post.genre|tagSplit:"," as tags%}
+                    {% for tag in tags %}
+                        <li class="color {% cycle 'color1' 'color2' 'color3' 'color4' %}">#{{ tag }}</li>
+                    {%endfor%}
+                {% endwith %}
+            </ul>
+        </div>
     </section>
-    <hr>
+
     <section class="content">
-        <p>{{post.content}}</p>
+        <div class="container">
+            <p>{{ post.content }}</p>
+        </div>
     </section>
+
+
 </body>
 </html>
