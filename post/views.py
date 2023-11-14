@@ -1,11 +1,20 @@
 from django.shortcuts import redirect, render
 from .form import postForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import reverse
-from .models import post
+from .models import post,comments
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.core.serializers import serialize
+
+
+#Loads all the comments for a requested post
+def LoadComments(request,postID):
+    targetPost=post.objects.get(id=postID)
+    queryset=targetPost.comments_set.all()
+    serialized_data=serialize('json',queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted'])
+    return JsonResponse(serialized_data,safe=True,status=200)
 
 #read all posts
 def postPage(request):

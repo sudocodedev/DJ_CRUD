@@ -2,6 +2,13 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+#Adding a natural key to User model, so it can be serialized as ForeignKey
+def natural_key(self):
+    return self.username
+
+#Monkey_Patching
+User.add_to_class("natural_key",natural_key)
+
 class post(models.Model):
     title=models.CharField(max_length=100)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -17,3 +24,17 @@ class post(models.Model):
 
     class Meta:
        ordering=["-date_modified","-date_posted"] 
+
+class comments(models.Model):
+    post=models.ForeignKey(post,on_delete=models.CASCADE,related_name="comments")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="comments",null=True)
+    body=models.CharField(max_length=200,blank=False)
+    comment_posted=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.user} --> {self.body[:11]}"
+
+    class Meta:
+        ordering=["-comment_posted",]
+
+
