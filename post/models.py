@@ -31,6 +31,9 @@ class comments(models.Model):
     body=models.CharField(max_length=200,blank=False)
     comment_posted=models.DateTimeField(auto_now_add=True)
 
+    def str_comment_posted(self):
+        return self.comment_posted.strftime("%b %d %y, %H:%M")
+
     def __str__(self) -> str:
         return f"{self.user} --> {self.body[:11]}"
 

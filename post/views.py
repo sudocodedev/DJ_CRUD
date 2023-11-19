@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.shortcuts import redirect, render
 from .form import postForm
 from django.http import HttpResponseRedirect, JsonResponse
@@ -5,16 +6,48 @@ from django.shortcuts import reverse
 from .models import post,comments
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib.auth.models import User
-from django.core.serializers import serialize
+# from django.contrib.auth.models import User
+# from django.core.serializers import serialize
+from django.core.serializers.json import Serializer
 
+#custom serializer for comment section
+class CommentSerializer(Serializer):
+    """custom serializer for comment section"""
+    def end_object(self, obj):
+        for field in self.selected_fields:
+            if field == 'pk': continue
+            elif field in self._current.keys(): continue
+            else:
+                try:
+                    self._current[field]=getattr(obj,field)() #for model method
+                    continue
+                except TypeError: pass
+
+                try:
+                    self._current[field].getattr(obj,field) #for property method
+                    continue
+                except AttributeError: pass
+
+        super(CommentSerializer, self).end_object(obj)
 
 #Loads all the comments for a requested post
-def LoadComments(request,postID):
-    targetPost=post.objects.get(id=postID)
-    queryset=targetPost.comments_set.all()
-    serialized_data=serialize('json',queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted'])
-    return JsonResponse(serialized_data,safe=True,status=200)
+def LoadComments(request,postid):
+    targetPost=post.objects.get(id=postid)
+    queryset=targetPost.comments.all()
+    serializers=CommentSerializer()
+    serialized_data=serializers.serialize(queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted','str_comment_posted'])
+    return JsonResponse(serialized_data,safe=False,status=200)
+
+#post the comment for the corresponding post
+@login_required(login_url='login-page')
+def PostComment(request,postid):
+    if request.method=='POST':
+        targetPost=post.objects.get(id=postid)
+        text=request.POST.get('text')
+        comment=comments.objects.create(post=targetPost,body=text,user=request.user)
+        comment.save()
+        return JsonResponse({'status':'success'})
+    return JsonResponse({'status':'error'})
 
 #read all posts
 def postPage(request):
@@ -100,9 +133,10 @@ def deletePost(request,postid):
 def detailedPost(request,postid):
     try:    
         detailed_post=post.objects.get(id=postid)
+        user_info=request.user.id
     except:
         raise "Requested post not found!!"
-    context={'post':detailed_post}
+    context={'post':detailed_post,'user_info':user_info}
     return render(request,'post/singlepost.html',context)
 
 

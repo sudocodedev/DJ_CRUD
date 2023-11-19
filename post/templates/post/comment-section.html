@@ -1,4 +1,19 @@
 <section class="comment-section">
-  <div class="enter-comment"></div>
-  <div class="display-comments"></div>
+  {% if request.user.is_authenticated %}
+  <div class="post-comment container">
+    <form action="" method="post" id="post-comment">
+      {% csrf_token %}
+      <input
+        type="text"
+        name="comment-text"
+        id="comment-text"
+        placeholder="enter ur comment..."
+      />
+      <button type="submit" class="comment-btn">
+        <i class="fa-solid fa-arrow-right fa-2xl"></i>
+      </button>
+    </form>
+  </div>
+  {% endif %}
+  <div class="load-comments container"></div>
 </section>
