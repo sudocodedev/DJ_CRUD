@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Survey Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link href="css/style.css" rel="stylesheet"> -->
+</head>
+
+<body>
+  <h1>Survey Form</h1>
+  <hr>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <ul>
+      {% for error in form.non_field_errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% for field in form %}
+    <div class="fieldwrapper">
+      <p>{{ field.label_tag }}</p>
+      {{ field }}
+      {% if field.errors %}
+      {{ field.errors }}
+      {% endif %}
+
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</body>
+
+</html>
