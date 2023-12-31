@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+from tinymce.models import HTMLField
 
 #Adding a natural key to User model, so it can be serialized as ForeignKey
 def natural_key(self):
@@ -9,13 +11,28 @@ def natural_key(self):
 #Monkey_Patching
 User.add_to_class("natural_key",natural_key)
 
+class GenreList(models.Model):
+    name=models.CharField(max_length=40)
+    slug=models.SlugField(max_length=50, blank=True)
+    description=models.TextField()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    
+    def __str__(self) -> str:
+        return self.name
+
 class post(models.Model):
     title=models.CharField(max_length=100)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
+    tags=models.ForeignKey(GenreList,on_delete=models.SET_NULL, null=True)
     genre=models.CharField(max_length=150)
     ratings=models.DecimalField(max_digits=3,decimal_places=2)
     image=models.ImageField(upload_to='posts_images/',blank=True)
-    content=models.TextField()
+    # content=models.TextField()
+    content=HTMLField()
     date_posted=models.DateTimeField(default=timezone.now)
     date_modified=models.DateTimeField(auto_now=True)
 

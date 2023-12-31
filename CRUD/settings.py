@@ -1,4 +1,14 @@
 from pathlib import Path
+from django.contrib import messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    #thrid_party_apps
+    'tinymce',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
     #my_apps
     'post',
     'authentication',
@@ -63,8 +78,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CRUD.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -93,9 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -105,18 +115,68 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
 
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #media directory setup
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+#django crispy form setup
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+#django tinymce setup
+TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 MB
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "320px",
+    
+    "width": "100%",
+    
+    "menubar": "file edit view insert format tools table help",
+    
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code codesample textarea"
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+
+    "text_pattern_patterns": [
+        {"start": '*', "end": '*', "format": 'italic'},
+        {"start": '**', "end": '**', "format": 'bold'},
+        {"start": '#', "format": 'h1'},
+        {"start": '##', "format": 'h2'},
+        {"start": '###', "format": 'h3'},
+        {"start": '####', "format": 'h4'},
+        {"start": '#####', "format": 'h5'},
+        {"start": '######', "format": 'h6'},
+        {"start": '* ', "cmd": 'InsertUnorderedList'},
+        {"start": '- ', "cmd": 'InsertUnorderedList'},
+        {"start": '1. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'decimal' }},
+        {"start": '1) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'decimal' }},
+        {"start": 'a. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-alpha' }},
+        {"start": 'a) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-alpha' }},
+        {"start": 'i. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-roman' }},
+        {"start": 'i) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-roman' }},
+        {"start": '---', "replacement": '<hr/>'},
+        {"start": '--', "replacement": '—'},
+        {"start": '-', "replacement": '—'},
+        {"start": '(c)', "replacement": '©'},
+        {"start": '//brb', "replacement": 'Be Right Back'},
+    ],
+
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    
+    "custom_undo_redo_levels": 10,
+    
+    "language": "es_ES", 
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
