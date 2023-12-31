@@ -117,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
-
+# STATIC_ROOT =  BASE_DIR / "static" 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -136,38 +136,10 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 MB
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "320px",
-    
     "width": "100%",
-    
     "menubar": "file edit view insert format tools table help",
-    
-    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code codesample textarea"
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code textpattern codesample "
     "fullscreen insertdatetime media table paste code help wordcount spellchecker",
-
-    "text_pattern_patterns": [
-        {"start": '*', "end": '*', "format": 'italic'},
-        {"start": '**', "end": '**', "format": 'bold'},
-        {"start": '#', "format": 'h1'},
-        {"start": '##', "format": 'h2'},
-        {"start": '###', "format": 'h3'},
-        {"start": '####', "format": 'h4'},
-        {"start": '#####', "format": 'h5'},
-        {"start": '######', "format": 'h6'},
-        {"start": '* ', "cmd": 'InsertUnorderedList'},
-        {"start": '- ', "cmd": 'InsertUnorderedList'},
-        {"start": '1. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'decimal' }},
-        {"start": '1) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'decimal' }},
-        {"start": 'a. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-alpha' }},
-        {"start": 'a) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-alpha' }},
-        {"start": 'i. ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-roman' }},
-        {"start": 'i) ', "cmd": 'InsertOrderedList', "value": { 'list-style-type': 'lower-roman' }},
-        {"start": '---', "replacement": '<hr/>'},
-        {"start": '--', "replacement": '—'},
-        {"start": '-', "replacement": '—'},
-        {"start": '(c)', "replacement": '©'},
-        {"start": '//brb', "replacement": 'Be Right Back'},
-    ],
-
     "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
     "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
     "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
@@ -177,6 +149,8 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     
     "language": "es_ES", 
+
+    "image_upload_url": "upload_image",
 }
 TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
+TINYMCE_COMPRESSOR = False

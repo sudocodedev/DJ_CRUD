@@ -6,8 +6,6 @@ from django.shortcuts import reverse
 from .models import post,comments
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-# from django.contrib.auth.models import User
-# from django.core.serializers import serialize
 from django.core.serializers.json import Serializer
 
 #custom serializer for comment section
