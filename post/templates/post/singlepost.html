@@ -43,21 +43,9 @@
         </div>
     </section>
 
-    <section class="taglist">
-        <div class="container">
-            <ul>
-                {% with post.genre|tagSplit:"," as tags%}
-                    {% for tag in tags %}
-                        <li class="color {% cycle 'color1' 'color2' 'color3' 'color4' %}">#{{ tag }}</li>
-                    {%endfor%}
-                {% endwith %}
-            </ul>
-        </div>
-    </section>
-
-        <section class="content" data-post-id="{{post.id}}">
+    <section class="content" data-post-id="{{post.id}}">
             <div class="container">
-            <p>{{ post.content }}</p>
+            <p>{{ post.content|safe }}</p>
         </div>
     </section>
 

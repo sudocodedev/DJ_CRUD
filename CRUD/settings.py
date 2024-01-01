@@ -135,7 +135,7 @@ TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 MB
 
 TINYMCE_DEFAULT_CONFIG = {
-    "height": "320px",
+    "height": "520px",
     "width": "100%",
     "menubar": "file edit view insert format tools table help",
     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code textpattern codesample "

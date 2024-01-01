@@ -27,9 +27,9 @@ class GenreList(models.Model):
 class post(models.Model):
     title=models.CharField(max_length=100)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
-    tags=models.ForeignKey(GenreList,on_delete=models.SET_NULL, null=True)
-    genre=models.CharField(max_length=150)
-    ratings=models.DecimalField(max_digits=3,decimal_places=2)
+    tags=models.ManyToManyField(GenreList)
+    genre=models.CharField(max_length=150, null=True, blank=True)
+    ratings=models.DecimalField(max_digits=3,decimal_places=2,null=True,blank=True)
     image=models.ImageField(upload_to='posts_images/',blank=True)
     content=HTMLField()
     date_posted=models.DateTimeField(default=timezone.now)
