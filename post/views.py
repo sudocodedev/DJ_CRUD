@@ -1,12 +1,27 @@
 from django.core import serializers
 from django.shortcuts import redirect, render
-from .form import postForm
+from .form import postForm, profileForm
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import reverse
 from .models import post,comments
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.serializers.json import Serializer
+
+
+#create profile for the user
+def UserProfile(request):
+    if request.method == "POST":
+        form=profileForm(request.POST, request.FILES)
+        if form.is_valid():
+            holder=form.save(commit=False)
+            holder.user=request.user
+            holder.save()
+            return redirect('post-page')
+    else:
+        form=profileForm()
+    context={'form':form}
+    return render(request,"post/profileform.html",context)
 
 #custom serializer for comment section
 class CommentSerializer(Serializer):
@@ -82,7 +97,6 @@ def createPost(request):
     if request.method=="POST":
         form=postForm(request.POST,request.FILES)
         if form.is_valid():
-            # t_user=User.objects.get(username__exact=request.user)
             holder=form.save(commit=False)
             holder.author=request.user
             name=form.cleaned_data['title']

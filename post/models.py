@@ -11,6 +11,26 @@ def natural_key(self):
 #Monkey_Patching
 User.add_to_class("natural_key",natural_key)
 
+
+class UserProfile(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    profileBackground=models.ImageField(upload_to='profile_images/', default='defaultBackground.jpg',blank=True)
+    profileImg=models.ImageField(upload_to='profile_images/', default='defaultUser.jpg', blank=True)
+    firstName=models.CharField(max_length=30, blank=False, null=False)
+    lastName=models.CharField(max_length=30, blank=False, null=False)
+    pronoun=models.CharField(max_length=15, blank=True, null=True)
+    bio=HTMLField()
+    location=models.CharField(max_length=50, blank=False, null=False) #state/ country
+    doj=models.DateField(auto_now_add=True) #date of joining
+    followers=models.ManyToManyField(User,related_name="following")
+    instagram=models.URLField(max_length=150)
+    x=models.URLField(max_length=150)
+    github=models.URLField(max_length=150)
+    telegram=models.URLField(max_length=150)
+
+    def __str__(self) -> str:
+        return self.firstName+" "+self.lastName
+
 class GenreList(models.Model):
     name=models.CharField(max_length=40)
     slug=models.SlugField(max_length=50, blank=True)

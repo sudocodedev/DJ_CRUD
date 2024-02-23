@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost&family=Outfit:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/singlePage.css' %}">
     <script type="text/javascript" src="{% static 'js/script.js' %}" defer ></script>
     <title>{{ post.title }}</title>
@@ -26,30 +29,44 @@
         </div>
     </div>
 
-    <!-- post content -->
-    <section class="header">
-        <div class="post-img" style="background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('{{ post.image.url }}');">
-            <div class="back"><a href="{{ request.META.HTTP_REFERER }}"><i class="fa-solid fa-arrow-left fa-xl"></i></a></div>
-            <div class="post-details">
-                <h2>{{ post.title }}</h2>
-                <h5>posted by {{ post.author }} on {{ post.date_posted | date:"M, jS Y" }}</h5>
-            </div>
-            {% if request.user == post.author %}
-            <div class="operations">
-                <div class="edit inline-block"><a href="{% url 'update-post' post.id %}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
-                <div class="delete inline-block"><i class="fa-solid fa-trash fa-xl"></i></div>
-            </div>
-            {% endif %}
+    <div class="post-layout">
+        <div class="post-layout-sidebar">
+            <i class="fa-solid fa-heart fa-xl"></i>
+            <i class="fa-solid fa-comment fa-xl"></i>
+            <i class="fa-solid fa-share fa-xl"></i>
+            <i class="fa-solid fa-bookmark fa-xl"></i>
         </div>
-    </section>
+        <div class="post-layout-main">
+            <!-- post content -->
+            <section class="header">
+                <div class="post-img" style="background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('{{ post.image.url }}');">
+                    <div class="back"><a href="{{ request.META.HTTP_REFERER }}"><i class="fa-solid fa-arrow-left fa-xl"></i></a></div>
+                    <div class="post-details">
+                        <h2>{{ post.title }}</h2>
+                        <h5>posted by {{ post.author }} on {{ post.date_posted | date:"M, jS Y" }}</h5>
+                    </div>
+                    {% if request.user == post.author %}
+                    <div class="operations">
+                        <div class="edit inline-block"><a href="{% url 'update-post' post.id %}"><i class="fa-regular fa-pen-to-square fa-xl"></i></a></div>
+                        <div class="delete inline-block"><i class="fa-solid fa-trash fa-xl"></i></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
 
-    <section class="content" data-post-id="{{post.id}}">
-            <div class="container">
-            <p>{{ post.content|safe }}</p>
+            <section class="content" data-post-id="{{post.id}}">
+                    <div class="container">
+                    <p>{{ post.content|safe }}</p>
+                </div>
+            </section>
+
+            {% include "post/comment-section.html" %}
+
         </div>
-    </section>
+    </div>
+    
 
-    {% include "post/comment-section.html" %}
+    
 
 </body>
 </html>

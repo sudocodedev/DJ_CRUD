@@ -11,6 +11,7 @@ urlpatterns = [
     path('detailed-post/<int:postid>',views.detailedPost,name='detailed-post'),
     path('comments/<str:postid>/',views.LoadComments,name='load-comments'),
     path('post-comment/<str:postid>/',views.PostComment,name='post-comment'),
+    path('profile/',views.UserProfile, name='profile-form'),
 ]
 
 if settings.DEBUG:

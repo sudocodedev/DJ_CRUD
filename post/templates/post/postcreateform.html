@@ -11,22 +11,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost&family=Outfit:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- <link rel="stylesheet" href="{% static 'css/singlePage.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <script defer src="{% static 'js/post.js' %}"></script>
     <title>Create Post</title>
 </head>
 <body>
     <div class="container">
-        <h3>Create Post</h3>
-        <form class="bg-primary px-4 py-3 rounded" method="post" enctype="multipart/form-data">
+        <h3 class="mt-4 mb-4 fw-bold">Create Post</h3>
+        <form class="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
-            {{ form|crispy }}
+            <div class="post-pic-container mb-4 mt-4">
+                <!-- <input type="file" id="post-pic-input" accept="image/*"> -->
+                {{form.image}}
+                <label for="post-pic-input" class="post-pic">
+                    <img id="preview" src="https://images.unsplash.com/photo-1564944062924-57874442ddea?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="post picture">
+                    <span>Upload cover pic</span>
+                </label>
+            </div>
+            <div class="post-title mb-4 mt-4">
+                {{form.title}}
+            </div>
+            {{form.tags|as_crispy_field}}
+            {{form.content|as_crispy_field}}
             <button type="submit" class="mb-4 btn btn-success">Submit</button>
             <a href="{% url 'post-page' %}" class='mb-4 btn btn-danger'>Cancel</a>   
         </form>

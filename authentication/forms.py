@@ -4,10 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 
 class userRegisterForm(UserCreationForm):
     email=forms.EmailField(label="Email",widget=forms.EmailInput(attrs={'placeholder': 'enter your email...','class': 'signup_field'}))
-    fullname=forms.CharField(max_length=30,label="Full Name",widget=forms.TextInput(attrs={'placeholder': 'enter your full name...','class': 'signup-field'}))
+
     class Meta:
         model=User
-        fields=("username","fullname","email","password1","password2")
+        fields=("username","email","password1","password2")
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'enter username...','class':'signup_field'}),
         }
@@ -21,8 +21,6 @@ class userRegisterForm(UserCreationForm):
     
     def save(self,commit=True):
         user=super(userRegisterForm,self).save(commit=False)
-        first_name,last_name=self.cleaned_data['fullname'].split()
-        user.first_name,user.last_name=first_name,last_name
         user.email=self.cleaned_data["email"]
         if commit:
             user.save()

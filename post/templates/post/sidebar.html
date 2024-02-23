@@ -3,7 +3,7 @@
 <div class="sidebar">
     {% if request.user.is_authenticated %}
     <div class="user-info sidebar-card">
-        <h4>Hi {{ request.user }}!!</h4>
+        <h4>Hi <a href="{% url 'profile-form' %}">{{ request.user }}</a>!!</h4>
         <small>Welcome Back 😄</small>
         <hr>
         <span>Followers: <strong>2k</strong></span>
