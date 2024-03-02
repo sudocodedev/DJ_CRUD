@@ -54,6 +54,7 @@ class post(models.Model):
     content=HTMLField()
     date_posted=models.DateTimeField(default=timezone.now)
     date_modified=models.DateTimeField(auto_now=True)
+    likes=models.ManyToManyField(User, related_name='liked_post')
 
     def __str__(self) -> str:
         return f"{self.title}--{self.author}"

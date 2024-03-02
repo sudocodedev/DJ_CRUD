@@ -130,7 +130,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 #django tinymce setup
-TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/7h3pybbg8i66afu5dyob6w58nagy3j71abel6qvfusveovfz/tinymce/5/tinymce.min.js'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 MB
 

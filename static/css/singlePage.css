@@ -7,6 +7,22 @@
   font-family: 'Outfit', sans-serif;
 }
 
+.hide-display {
+  display: none;
+}
+
+.post-layout-navigator {
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+  z-index: 10;
+  padding: 5px;
+  border-radius: 10%;
+  background-color: rgba(17, 2, 102, 0.644);
+  color: #faf9f6;
+  cursor: pointer;
+  border: 1px solid black;
+}
 
 .post-layout {
   display: grid;
@@ -188,7 +204,7 @@ form a {
 
 .content {
   width: 100%;
-  line-height: 35px;
+  line-height: 28px;
   margin-top: 2rem;
 }
 

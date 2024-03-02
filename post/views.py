@@ -119,7 +119,7 @@ def updatePost(request,postid):
     if request.user == upost.author:
         form=postForm(instance=upost)
         if request.method=="POST":
-            form=postForm(request.POST,instance=upost)
+            form=postForm(request.POST,request.FILES,instance=upost)
             if form.is_valid():
                 form.save() #saving it to DB
                 name=form.cleaned_data["title"]

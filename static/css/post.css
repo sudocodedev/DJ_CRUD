@@ -59,14 +59,14 @@ input[type="file"]{
     overflow: hidden;
 }
 
-.post-pic, .bg-pic img{
+.post-pic img, .bg-pic img{
     height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
 }
 
-.post-pic, .bg-pic span{
+.post-pic span, .bg-pic span{
     position: absolute;
     bottom: 1px;
     transform: translateX(20%);

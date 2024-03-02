@@ -28,6 +28,9 @@
             </form>
         </div>
     </div>
+    <div class="post-layout-navigator hide-display" >
+        <i class="fa-solid fa-chevron-up fa-xl fa-beat"></i>
+    </div>
 
     <div class="post-layout">
         <div class="post-layout-sidebar">
@@ -36,7 +39,7 @@
             <i class="fa-solid fa-share-nodes fa-xl"></i>
             <i class="fa-solid fa-bookmark fa-xl"></i>
         </div>
-        <div class="post-layout-main">
+        <div class="post-layout-main" id="main-view">
             <!-- post content -->
             <section class="header">
                 <div class="post-img" style="background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('{{ post.image.url }}');">
@@ -64,9 +67,5 @@
 
         </div>
     </div>
-    
-
-    
-
 </body>
 </html>

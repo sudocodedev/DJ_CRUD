@@ -27,8 +27,7 @@
         <form class="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
-            <div class="post-pic-container mb-4 mt-4">
-                <!-- <input type="file" id="post-pic-input" accept="image/*"> -->
+            <div class="post-pic-container">
                 {{form.image}}
                 <label for="post-pic-input" class="post-pic">
                     <img id="preview" src="https://images.unsplash.com/photo-1564944062924-57874442ddea?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="post picture">
