@@ -11,7 +11,12 @@ urlpatterns = [
     path('detailed-post/<int:postid>',views.detailedPost,name='detailed-post'),
     path('comments/<str:postid>/',views.LoadComments,name='load-comments'),
     path('post-comment/<str:postid>/',views.PostComment,name='post-comment'),
-    path('profile/',views.UserProfile, name='profile-form'),
+    path('create-profile/',views.UserProfile, name='create-profile'),
+    path('update-profile/<int:pk>/',views.EditUserProfile, name='update-profile'),
+    path('like-post/<int:postid>/',views.likePost, name='like-post'),
+    path('bookmark-post/<int:postid>/',views.bookMarkPost, name='bookmark-post'),
+    path('post-status/<int:postid>/',views.statusCheck, name='post-status'),
+    path('trending-posts/',views.top3Posts, name='top-3-posts'),
 ]
 
 if settings.DEBUG:

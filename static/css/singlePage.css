@@ -11,6 +11,13 @@
   display: none;
 }
 
+.post-likes-count, .post-layout-sidebar .value{
+  color: #e6e6e6;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 0.8rem;
+}
+
 .post-layout-navigator {
   position: fixed;
   bottom: 20px;
@@ -50,13 +57,18 @@
   color: #e6e6e6;
 }
 
-.post-layout-sidebar i:hover{
-  color: #afafaf;
+.post-like-button:hover {
+  color: rgb(255, 3, 62);
+}
+
+.post-bookmark-button:hover {
+  color: rgb(255, 192, 0);
 }
 
 .post-layout-main { 
   grid-area: 1 / 2 / 6 / 6;
   overflow: auto;
+  position: relative;
 }
 
 .bg-modal {

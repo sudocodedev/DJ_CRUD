@@ -134,8 +134,15 @@
 }
 
 .user-info hr,
+.user-info h4,
 .user-info small,
-.user-info hr {
+.user-info span {
+  margin-left: 12px;
+}
+
+.user-info hr,
+.user-info small
+ {
   margin-top: 4px;
   margin-bottom: 10px;
   text-align: center;
@@ -154,6 +161,12 @@
   margin-bottom: 10px;
 }
 
+.controls .trending{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .topics h3,
 .topics hr {
   margin-bottom: 10px;
@@ -161,7 +174,8 @@
 }
 
 .topic {
-  background-color: rgb(185, 185, 185);
+  /* background-color: rgb(185, 185, 185); */
+  background-color: rgb(229, 228, 226);
   border-radius: 10px;
   padding: 5px 8px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.6);

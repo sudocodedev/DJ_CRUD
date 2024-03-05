@@ -55,6 +55,7 @@ class post(models.Model):
     date_posted=models.DateTimeField(default=timezone.now)
     date_modified=models.DateTimeField(auto_now=True)
     likes=models.ManyToManyField(User, related_name='liked_post')
+    bookmark=models.ManyToManyField(User, related_name='bookmarked_post')
 
     def __str__(self) -> str:
         return f"{self.title}--{self.author}"

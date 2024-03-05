@@ -1,15 +1,44 @@
-from django.core import serializers
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .form import postForm, profileForm
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import reverse
-from .models import post,comments
+from .models import post,comments,UserProfile
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.core.serializers.json import Serializer
 
 
+def top3Posts(request):
+    queryset=post.objects.annotate(nums_likes=Count('likes')).order_by('-nums_likes')[:3].values('id','title','nums_likes')
+    return JsonResponse({'picks': list(queryset)},safe=False)
+
+#like post
+@login_required(login_url='login-page')
+def likePost(request, postid):
+    post_likes=get_object_or_404(post,id=postid)
+    if request.user in post_likes.likes.all():
+        liked=False
+        post_likes.likes.remove(request.user)
+    else:
+        liked=True
+        post_likes.likes.add(request.user)
+    return JsonResponse({'liked':liked, 'like_count':post_likes.likes.count()})
+
+#bookmark a post for future reference
+@login_required(login_url='login-page')
+def bookMarkPost(request, postid):
+    post_bookmark=get_object_or_404(post,id=postid)
+    if request.user in post_bookmark.bookmark.all():
+        bookmarked=False
+        post_bookmark.bookmark.remove(request.user)
+    else:
+        bookmarked=True
+        post_bookmark.bookmark.add(request.user)
+    return JsonResponse({'bookmarked':bookmarked,'bookmark_counts': post_bookmark.bookmark.count()})
+
+
 #create profile for the user
+@login_required(login_url='login-page')
 def UserProfile(request):
     if request.method == "POST":
         form=profileForm(request.POST, request.FILES)
@@ -22,6 +51,28 @@ def UserProfile(request):
         form=profileForm()
     context={'form':form}
     return render(request,"post/profileform.html",context)
+
+#edit user profile
+@login_required(login_url='login-page')
+def EditUserProfile(request,profileid):
+    try:
+        uprofile=UserProfile.objects.get(id=profileid)
+    except:
+        raise "Profile not found"
+    form=''
+    if request.user == uprofile.user:
+        form=profileForm(instance=uprofile)
+        if request.method=="POST":
+            form=postForm(request.POST,request.FILES,instance=uprofile)
+            if form.is_valid():
+                form.save() #saving it to DB
+                name=form.cleaned_data["title"]
+                print("{} has been updated successfully!!".format(name))
+                return HttpResponseRedirect(reverse('post-page'))
+    else:
+        return redirect("You are not allowed here!")
+    context={'form':form,'post':uprofile, 'action': 'edit'}
+    return render(request,'post/profileform.html',context)
 
 #custom serializer for comment section
 class CommentSerializer(Serializer):
@@ -71,7 +122,6 @@ def postPage(request):
         sort=cache.get('sort') if cache.get('sort') != None else ''
         search=cache.get('search') if cache.get('search') != None else ''
         genre=cache.get('genre') if cache.get('genre') != None else ''
-        print(search,genre)
         #query the db model
         posts=post.objects.filter(
             Q(genre__icontains=genre) |
@@ -127,7 +177,7 @@ def updatePost(request,postid):
                 return HttpResponseRedirect(reverse('post-page'))
     else:
         return redirect("You are not allowed here!")
-    context={'form':form}
+    context={'form':form,'post':upost, 'action': 'edit'}
     return render(request,'post/postcreateform.html',context)
 
 #delete post
@@ -145,14 +195,25 @@ def deletePost(request,postid):
 def detailedPost(request,postid):
     try:    
         detailed_post=post.objects.get(id=postid)
-        user_info=request.user.id
+        queryset=detailed_post.comments.count()
+        user_info=request.user.id    
     except:
         raise "Requested post not found!!"
-    context={'post':detailed_post,'user_info':user_info}
+    context={
+        'post':detailed_post,
+        'user_info':user_info,
+        'comments_count':queryset,
+        }
     return render(request,'post/singlepost.html',context)
 
-
-          
+def statusCheck(request,postid):
+    try:
+        detailed_post=post.objects.get(id=postid)
+        like_check= True if request.user in detailed_post.likes.all() else False;
+        bookmark_check= True if request.user in detailed_post.bookmark.all() else False;
+    except:
+        raise "post not found!!"
+    return JsonResponse({'like_check':like_check, 'bookmark_check': bookmark_check})
 
 
     

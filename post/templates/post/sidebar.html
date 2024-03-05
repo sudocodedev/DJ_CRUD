@@ -11,10 +11,9 @@
     </div>
     {% endif %}
     <div class="controls sidebar-card">
-        <h3>Quick Actions</h3>
+        <h3><i class="fa-solid fa-chart-line fa-bounce" style="margin-left: 10px;"></i>  Trending</h3>
         <hr>
-        <button type="submit"><a href="{% url 'post-page' %}?sort=1">ASC</a></button>
-        <button type="submit"><a href="{% url 'post-page' %}?sort=-1">DSC</a></button>
+        <div class="trending"></div>
     </div>
     <div class="topics sidebar-card">
         <h3>Browse topics</h3>

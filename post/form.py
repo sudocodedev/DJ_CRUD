@@ -20,7 +20,7 @@ class postForm(forms.ModelForm):
         fields = ["image","title","tags","content"]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'New post title here...'}),  
-            'image': forms.ClearableFileInput(attrs={'id': "post-pic-input", 'accept': "image/*"}),
+            'image': forms.FileInput(attrs={'id': "post-pic-input", 'accept': "image/*"}),
         }
 
 class profileForm(forms.ModelForm):
@@ -48,6 +48,6 @@ class profileForm(forms.ModelForm):
                     'toolbar': 'bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
                 }
             ),
-            'profileImg': forms.ClearableFileInput(attrs={'id': "profile-pic-input", 'accept': "image/*"}),
-            'profileBackground': forms.ClearableFileInput(attrs={'id': "bg-pic-input", 'accept': "image/*"}),
+            'profileImg': forms.FileInput(attrs={'id': "profile-pic-input", 'accept': "image/*"}),
+            'profileBackground': forms.FileInput(attrs={'id': "bg-pic-input", 'accept': "image/*"}),
         }
