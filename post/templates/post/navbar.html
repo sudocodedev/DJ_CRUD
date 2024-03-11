@@ -7,12 +7,40 @@
             <button type="submit"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
             <input type="text" name="search" id="searchbar" placeholder="search for posts...">
         </form>
-        <button type="submit" class="login">
         {% if request.user.is_authenticated %}
-            <a href="{% url 'logout-page' %}">Logout</a>
+            <img id="nav-user-pic" src="{{ profile.profileImg.url }}" alt="user-pic">
         {% else %}
             <a href="{% url 'login-page' %}">Login</a>
         {% endif %}
         </button>
+    </div>
+    <div class="sub-menu-wrap" id="subMenu">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img src="{{ profile.profileImg.url }}" alt="user pic">
+                <h4>{{ profile.firstName }} {{ profile.lastName }}</h4>
+            </div>
+            <hr>
+            <a href="{% url 'userprofile-view' profile.id %}" class="sub-menu-link">
+                <i class="dd-icon fa-solid fa-user"></i>
+                <p>View Profile</p>
+                <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+                <i class="dd-icon fa-solid fa-gear"></i>
+                <p>Settings & Privacy</p>
+                <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+                <i class="dd-icon fa-solid fa-circle-info"></i>
+                <p>Help & Support</p>
+                <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
+            </a>
+            <a href="{% url 'logout-page' %}" class="sub-menu-link">
+                <i class="dd-icon fa-solid fa-right-from-bracket"></i>
+                <p>Logout</p>
+                <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
+            </a>
+        </div>
     </div>
 </div>

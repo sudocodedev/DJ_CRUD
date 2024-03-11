@@ -1,3 +1,13 @@
+//dropdown
+function toggleDropDown() {
+  document.getElementById("subMenu").classList.toggle("open-menu");
+}
+
+if(document.getElementById("nav-user-pic")) {
+  const img=document.getElementById("nav-user-pic");
+  img.addEventListener('click', toggleDropDown);
+}
+
 //top 3 trending posts based on likes
 function top3Posts(){
   const URL='/trending-posts/';
@@ -5,7 +15,6 @@ function top3Posts(){
   .then(res => res.json())
   .then(data => {
     let top_posts = data.picks;
-    console.log(top_posts);
     let holder=document.querySelector('.controls .trending');
     holder.innerHTML += `
       <div style="width: 100%; padding: 10px 5px 10px 16px; margin:1px 0 3px 0; border-radius: 15px; background-color: rgb(229, 228, 226); font-weight: bold;"><span style="font-size: 1.5rem;">🥇</span> <a style="text-decoration:none; color: #000;" href="/detailed-post/${Number(top_posts[0].id)}">${top_posts[0].title}</a></div>
@@ -112,12 +121,13 @@ function likedPost(id, holder) {
   })
 }
 
-let post_like_button = document.querySelector('.post-like-button');
-
-post_like_button.addEventListener('click', ()=>{
-  const post_id=getPostID();
-  likedPost(post_id,post_like_button)
-});
+if(document.querySelector('.post-like-button')) {
+  let post_like_button = document.querySelector('.post-like-button');
+  post_like_button.addEventListener('click', ()=>{
+    const post_id=getPostID();
+    likedPost(post_id,post_like_button)
+  });
+}
 
 
 //bookmark a post for future reference

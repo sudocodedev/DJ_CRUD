@@ -13,9 +13,9 @@ User.add_to_class("natural_key",natural_key)
 
 
 class UserProfile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    profileBackground=models.ImageField(upload_to='profile_images/', default='defaultBackground.jpg',blank=True)
-    profileImg=models.ImageField(upload_to='profile_images/', default='defaultUser.jpg', blank=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE, related_name="profile_info")
+    profileBackground=models.ImageField(upload_to='profile_images/',blank=True, default='profile_images/defaultBackground.jpg')
+    profileImg=models.ImageField(upload_to='profile_images/', blank=True, default='profile_images/defaultUser.jpg')
     firstName=models.CharField(max_length=30, blank=False, null=False)
     lastName=models.CharField(max_length=30, blank=False, null=False)
     pronoun=models.CharField(max_length=15, blank=True, null=True)

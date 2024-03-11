@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Profile</title>
+</head>
+<body>
+    
+    <!-- profile -->
+    <div class="screen">
+        <div class="layout holder1 profile-bg" style="background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('{{ user.profileBackground.url }}');">
+          <a class="back-link" href="{% url 'post-page' %}"><i class="back-arrow fa-solid fa-arrow-left fa-xl"></i></a>
+            <img id="user-profile-pic" src="{{ user.profileImg.url }}" alt="profile-pic">
+            <div class="user-info1">
+                <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+                <h4>@{{ user.user.username }}</h4>
+                <p><b class="following">{{ following }}</b> Following</p>
+                <p><b class="followers">{{ user.followers.count }}</b> Followers</p>
+            </div>
+            <div class="user-info2">
+              {% if user.user == request.user %}
+                <button class="edit"><a href="{% url 'update-profile' user.id %}"><i class="fa-regular fa-pen-to-square"></i> Edit</a></button>
+              {% else %}
+                <button class="message">Follow</button>
+              {% endif %}
+                <button class="message">Message</button>
+            </div>
+        </div>
+        <div class="layout">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="icon-tab-0" data-bs-toggle="tab" href="#icon-tabpanel-0" role="tab" aria-controls="icon-tabpanel-0" aria-selected="true"><i class="fa-solid fa-face-smile"></i> Bio</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="icon-tab-1" data-bs-toggle="tab" href="#icon-tabpanel-1" role="tab" aria-controls="icon-tabpanel-1" aria-selected="false"><i class="fa-solid fa-chart-line"></i> Stats</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="icon-tab-2" data-bs-toggle="tab" href="#icon-tabpanel-2" role="tab" aria-controls="icon-tabpanel-2" aria-selected="false"><i class="fa-solid fa-bookmark"></i> Bookmarks</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="icon-tab-2" data-bs-toggle="tab" href="#icon-tabpanel-3" role="tab" aria-controls="icon-tabpanel-2" aria-selected="false"><i class="fa-solid fa-compass-drafting"></i> Drafts</a>
+                </li>
+              </ul>
+              <div class="tab-content pt-5" id="tab-content">
+                <!-- user bio -->
+                <div class="content tab-pane active" id="icon-tabpanel-0" role="tabpanel" aria-labelledby="icon-tab-0">
+                  <div class="user-info3">
+                    <ul class="d1">
+                      <li><i class="fa-solid fa-cake-candles fa-lg"></i> {{user.doj|date:"M d, Y"}}</li>
+                      <li><i class="fa-solid fa-person-half-dress fa-xl"></i> {{ user.pronoun }}</li>
+                      <li><i class="fa-solid fa-location-dot fa-xl"></i> {{  user.location }}</li>
+                    </ul>
+                    <div class="bio">{{ user.bio|safe }}</div>
+                    <p>🤝🏻 Let's connect at, </p>
+                    <ul class="d2">
+                      <li><a id="twitter" href="{{ user.x }}"><i class="fa-brands fa-x-twitter fa-xl"></i></a></li>
+                      <li><a id="instagram" href="{{ user.instagram }}"><i class="fa-brands fa-instagram fa-xl"></i></a></li>
+                      <li><a id="telegram" href="{{ user.telegram }}"><i class="fa-brands fa-telegram fa-xl"></i></a></li>
+                      <li><a id="github" href="{{ user.github }}"><i class="fa-brands fa-github fa-xl"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- User Stats -->
+                <div class="content tab-pane" id="icon-tabpanel-1" role="tabpanel" aria-labelledby="icon-tab-1">
+                  <div class="user-info4">
+                    <div class="ud1 flex">
+                      <h6>Posts Liked</h6>
+                      <p>{{ stats.post_liked }}</p>
+                    </div>
+                    <div class="ud2 flex">
+                      <h6>Posts Commented</h6>
+                      <p>{{ stats.post_commented }}</p>
+                    </div>
+                    <div class="ud3 flex">
+                      <h6>Posts Bookmarked</h6>
+                      <p>{{ stats.post_bookmarked }}</p>
+                    </div>
+                    <div class="ud4 flex">
+                      <h6>Likes Received</h6>
+                      <p>{{ stats.likes_received }}</p>
+                    </div>
+                    <div class="ud5 flex">
+                      <h6>Comments Received</h6>
+                      <p>{{ stats.comments_received }}</p>
+                    </div>
+                    <div class="ud6 flex">
+                      <h6>Posts Published</h6>
+                      <p>{{ stats.post_published }}</p>
+                    </div>
+                    <div class="ud7 flex">
+                      <h6>Draft Posts</h6>
+                      <p>20</p>
+                    </div>
+                    <div class="ud8 flex">
+                      <h6>Comments Liked</h6>
+                      <p>10</p>
+                    </div>
+                    <div class="ud9 flex">
+                      <h6>Followers</h6>
+                      <p>{{ stats.followers }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- bookmarks -->
+                <div class="content tab-pane" id="icon-tabpanel-2" role="tabpanel" aria-labelledby="icon-tab-2">Content of Tab 3</div>
+                
+                <!-- User activity -->
+                <div class="content tab-pane" id="icon-tabpanel-3" role="tabpanel" aria-labelledby="icon-tab-2">No Drafts Found</div>
+              </div>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

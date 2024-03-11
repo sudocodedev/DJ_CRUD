@@ -20,14 +20,22 @@
 </head>
 <body>
     <div class="container userprofile-form">
-            <h3 class="mt-4 mb-4 fw-bold text-center">Edit Profile</h3>
+            {% if action == "edit" %}
+                <h3 class="mt-4 mb-4 fw-bold text-center">Edit Profile</h3>
+            {% else %}
+                <h3 class="mt-4 mb-4 fw-bold text-center">Create Profile</h3>
+            {% endif %}
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.media }}
                 <div class="profile-pic-container mb-4 mt-4">
                     {{form.profileImg}}
                     <label for="profile-pic-input" class="profile-pic">
-                        <img id="preview" src="https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg" alt="profile picture">
+                        {% if profile.profileImg.url %}
+                            <img id="profile-pic-preview" src="{{ profile.profileImg.url }}" alt="profile picture">
+                        {% else %}
+                            <img id="profile-pic-preview" src="https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg" alt="profile picture">
+                        {% endif %}
                         <span><i class="fa-solid fa-camera fa-2xl"></i></span>
                     </label>
                 </div>
@@ -53,7 +61,11 @@
                 <div class="bg-pic-container mb-4 mt-4">
                     {{form.profileBackground}}
                     <label for="bg-pic-input" class="bg-pic">
-                        <img id="preview" src="https://images.unsplash.com/photo-1564944062924-57874442ddea?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="bg picture">
+                        {% if profile.profileBackground.url %}
+                        <img id="bg-pic-preview" src="{{ profile.profileBackground.url }}" alt="profile bg pic">
+                        {% else %}
+                        <img id="bg-pic-preview" src="https://images.unsplash.com/photo-1564944062924-57874442ddea?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="bg picture">
+                        {% endif %}
                         <span>Upload cover pic</span>
                     </label>
                 </div>
@@ -74,7 +86,11 @@
                     {{form.telegram|as_crispy_field}}
                 </div>
                 <button type="submit" class="mb-4 btn btn-success">Done</button>
+                {% if action == "edit" %}
+                <a href="{% url 'userprofile-view' profile.id %}" class='mb-4 ms-3 btn btn-danger'>Cancel</a>
+                {% else %}
                 <a href="{% url 'post-page' %}" class='mb-4 ms-3 btn btn-danger'>Cancel</a>
+                {% endif %}
             </form>
     </div>
     

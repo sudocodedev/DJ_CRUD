@@ -6,7 +6,34 @@ from .models import post,comments,UserProfile
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.core.serializers.json import Serializer
+from django.contrib.auth.models import User
 
+def UserProfileView(request, profileid):
+    uprofile=UserProfile.objects.get(id=profileid)
+    l_user=User.objects.get(id=uprofile.user.id)
+    following=l_user.following.count()
+
+    #User Stats
+    post_liked=l_user.liked_post.count()
+    post_commented=l_user.comments.count()
+    post_bookmarked=l_user.bookmarked_post.count()
+    likes_received=l_user.post_set.aggregate(tot_likes=Count('likes'))
+    comments_received=l_user.post_set.aggregate(tot_comments=Count('comments'))
+    followers=uprofile.followers.count()
+    post_published=l_user.post_set.count()
+
+    stats = {
+        'post_liked': post_liked,
+        'post_commented': post_commented,
+        'post_bookmarked': post_bookmarked,
+        'likes_received': likes_received['tot_likes'],
+        'comments_received': comments_received['tot_comments'],
+        'followers': followers,
+        'post_published': post_published,
+    }
+
+    context={'user': uprofile, 'following': following, 'stats': stats}
+    return render(request,'post/profileview.html',context)
 
 def top3Posts(request):
     queryset=post.objects.annotate(nums_likes=Count('likes')).order_by('-nums_likes')[:3].values('id','title','nums_likes')
@@ -39,7 +66,7 @@ def bookMarkPost(request, postid):
 
 #create profile for the user
 @login_required(login_url='login-page')
-def UserProfile(request):
+def CreateUserProfile(request):
     if request.method == "POST":
         form=profileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -53,25 +80,16 @@ def UserProfile(request):
     return render(request,"post/profileform.html",context)
 
 #edit user profile
-@login_required(login_url='login-page')
+# @login_required(login_url='login-page')
 def EditUserProfile(request,profileid):
-    try:
-        uprofile=UserProfile.objects.get(id=profileid)
-    except:
-        raise "Profile not found"
-    form=''
-    if request.user == uprofile.user:
-        form=profileForm(instance=uprofile)
-        if request.method=="POST":
-            form=postForm(request.POST,request.FILES,instance=uprofile)
-            if form.is_valid():
-                form.save() #saving it to DB
-                name=form.cleaned_data["title"]
-                print("{} has been updated successfully!!".format(name))
-                return HttpResponseRedirect(reverse('post-page'))
-    else:
-        return redirect("You are not allowed here!")
-    context={'form':form,'post':uprofile, 'action': 'edit'}
+    uprofile=UserProfile.objects.get(id=profileid)
+    form=profileForm(instance=uprofile)
+    if request.method=="POST":
+        form=profileForm(request.POST,request.FILES,instance=uprofile)
+        if form.is_valid():
+            form.save() #saving it to DB
+            return HttpResponseRedirect(reverse('post-page'))
+    context={'form':form,'profile':uprofile, 'action': 'edit'}
     return render(request,'post/profileform.html',context)
 
 #custom serializer for comment section
@@ -115,30 +133,21 @@ def PostComment(request,postid):
 
 #read all posts
 def postPage(request):
-    try:
-        #copy get request in a placeholder
-        cache=request.GET
-        #getting the query parameters
-        sort=cache.get('sort') if cache.get('sort') != None else ''
-        search=cache.get('search') if cache.get('search') != None else ''
-        genre=cache.get('genre') if cache.get('genre') != None else ''
-        #query the db model
-        posts=post.objects.filter(
-            Q(genre__icontains=genre) |
-            Q(author__username__icontains=search) |
-            Q(title__icontains=search) |
-            Q(content__icontains=search)
-        )
-        
-        #sorting posts based on sort param based in get request
-        if sort=="1": posts=posts.order_by("ratings")
-        if sort=="-1": posts=posts.order_by("-ratings")
-
-        posts_count=posts.count() if genre != '' else False
-        print(posts_count)
-    except:
-        raise "Objects not found, check whether anything is available..."    
-    context={'posts':posts,'post_count':posts_count}
+    cache=request.GET #copy get request in a placeholder
+    #getting the query parameters
+    search=cache.get('search') if cache.get('search') != None else ''
+    genre=cache.get('genre') if cache.get('genre') != None else ''
+    #query the db model
+    posts=post.objects.filter(
+        Q(genre__icontains=genre) |
+        Q(author__username__icontains=search) |
+        Q(title__icontains=search) |
+        Q(content__icontains=search)
+    )
+    l_user=User.objects.get(id=request.user.id)
+    uprofile=UserProfile.objects.get(user=l_user)
+    following=User.objects.get(id=uprofile.user.id).following.count()
+    context={'posts':posts, 'profile':uprofile, 'following':following}
     return render(request,'post/index.html',context)
 
 #create post
