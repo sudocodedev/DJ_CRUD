@@ -11,6 +11,13 @@ img{
     width:100%;
 }
 
+.container-auth {
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('https://w0.peakpx.com/wallpaper/979/265/HD-wallpaper-anime-boku-no-hero-demon-slayer-dragon-ball-naruto-one-piece.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 .page .wrapper{
     height:100px;
     width:100px;
@@ -18,13 +25,14 @@ img{
     padding: 10px; 
 }
 
-.container{
+.container-auth {
     height: 100vh;
     width:100%;
     background-color: rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .page{
@@ -32,6 +40,8 @@ img{
     border-radius: 25px;
     padding: 25px 30px;
     box-shadow: 17px 13px 22px 5px rgba(0,0,0,0.1);
+    /* height: 50%; */
+    width: 38%;
 }
 
 
@@ -49,6 +59,7 @@ img{
     outline: none;
     border-radius: 30px;
     font-size: 1rem;
+    cursor: pointer;
 }
 
 h2 {
@@ -83,4 +94,10 @@ h2 {
     padding: 10px 0;
 }
 
+.signup strong a{
+    color: rgb(29, 26, 26);
+}
 
+.page a{
+    color: rgb(29, 26, 26);
+}

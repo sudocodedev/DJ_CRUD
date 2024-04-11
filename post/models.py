@@ -56,6 +56,7 @@ class post(models.Model):
     date_modified=models.DateTimeField(auto_now=True)
     likes=models.ManyToManyField(User, related_name='liked_post')
     bookmark=models.ManyToManyField(User, related_name='bookmarked_post')
+    isDraft=models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"{self.title}--{self.author}"

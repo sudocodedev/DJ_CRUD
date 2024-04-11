@@ -1,3 +1,18 @@
+// main page notifications
+
+if(document.querySelector('.pop-up-notifications')){
+  console.log("found notifications")
+  let main=document.querySelector('.notification-messages');
+  console.log(main);
+  main.addEventListener('click', (e)=> {
+    if(e.target.className.includes('notification-close')){
+      let notification=e.target.parentElement;
+      main.removeChild(notification);
+    }
+    console.log(e.target.className.includes('notification-close'));
+  });
+}
+
 //dropdown
 function toggleDropDown() {
   document.getElementById("subMenu").classList.toggle("open-menu");
@@ -25,7 +40,9 @@ function top3Posts(){
   })
 }
 
-top3Posts();
+if(document.querySelector('.controls .trending')){
+  top3Posts();
+}
 
 //like, bookmark status check during initial page load for new user
 function statusCheck(id){
@@ -91,8 +108,8 @@ function likedPost(id, holder) {
   .then(res => res.json())
   .then(data => {
     let l_color=''; //color to be applied if user liked the post
-    let temp=''; //style to applied if user liked the post
-    let b_style=''; //style to removed if user liked the post
+    let temp=''; //style to be removed if user liked the post
+    let b_style=''; //style to be applied if user liked the post
     let message='';
 
     //Deciding which color & style to pick for like or unlike
@@ -166,20 +183,19 @@ function bookmarkPost(id, holder){
   })
 }
 
-// let b_color = localStorage.getItem('bookmarked_color') || "rgb(230,230,230)";
-let post_bookmark_button = document.querySelector('.post-bookmark-button');
+if (document.querySelector('.post-bookmark-button')){
+  let post_bookmark_button = document.querySelector('.post-bookmark-button');
 
-// post_bookmark_button.style.color = b_color;
-// post_bookmark_button.classList.add(icon_style);
-
-post_bookmark_button.addEventListener('click', ()=> {
-  const post_id=getPostID();
-  bookmarkPost(post_id, post_bookmark_button);
-});
+  post_bookmark_button.addEventListener('click', ()=> {
+    const post_id=getPostID();
+    bookmarkPost(post_id, post_bookmark_button);
+  });
+}
 
 //page up & down detection
 let content=document.querySelector(".post-layout-main");
 let lastScrollTop=0;
+content.addEventListener('scroll',scrollTopPage);
 
 function scrollTopPage(){
   let navigator=document.querySelector(".post-layout-navigator");
@@ -192,7 +208,6 @@ function scrollTopPage(){
   lastScrollTop= currentScrollTop<=0 ? 0: currentScrollTop;
 }
 
-content.addEventListener('scroll',scrollTopPage);
 
 //scroll to top of the page
 const moveToTop=document.querySelector(".post-layout-navigator");
@@ -246,7 +261,10 @@ function getPostID() {
 }
 
 LoadComments();
-statusCheck(getPostID());
+
+if(document.querySelector('.post-like-button') || document.querySelector('.post-bookmark-button')) {
+  statusCheck(getPostID());
+}
 
 // function PostComment() {
 if(document.querySelector("#post-comment")) {
@@ -284,11 +302,15 @@ if(document.querySelector("#post-comment")) {
 }
 
 // for opening the modal
-document.querySelector(".delete").addEventListener("click", function () {
-  document.querySelector(".bg-modal").style.display = "flex";
-});
+if(document.querySelector(".delete")){
+  document.querySelector(".delete").addEventListener("click", function () {
+    document.querySelector(".bg-modal").style.display = "flex";
+  });
+}
 
 // for closing the modal
-document.querySelector(".close").addEventListener("click", function () {
-  document.querySelector(".bg-modal").style.display = "none";
-});
+if(document.querySelector(".close")){
+  document.querySelector(".close").addEventListener("click", function () {
+    document.querySelector(".bg-modal").style.display = "none";
+  });
+}

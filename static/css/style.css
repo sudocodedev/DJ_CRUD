@@ -3,6 +3,138 @@
   --text-color2: #fff;
 }
 
+/* homepage */
+#home-bg{
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#home-bg .home-logo{
+  font-family: "Honk", system-ui;
+  font-size: 3rem;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "MORF" 15,
+    "SHLN" 50;
+  cursor: pointer;
+}
+
+.home-nav{
+  height: 10%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.home-nav ul{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.home-nav ul li{
+  margin-right: 30px;
+  padding: 5px 15px;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.4s ease-in-out;
+}
+
+.home-nav ul li:hover,
+.home-nav ul li:focus{
+  border-bottom: 2px solid white;
+}
+
+.home-nav ul li a{
+  font-size: 1.25rem;
+  color: #fff;
+  padding: 5px 0px;
+}
+
+.home-nav ul button{
+  background: transparent;
+  font-size: 1.25rem;
+  border: 2.5px solid transparent;
+  outline: none;
+  padding: 10px 20px;
+  margin-right: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border .4s ease-out;
+}
+
+.home-nav ul button a{
+  color: #fff;
+}
+
+.home-nav ul button:hover, .home-nav ul button:focus{
+  border: 2.5px solid #fff;
+}
+
+.home-content{
+  height: 90%;
+  width: 100%;
+  position: relative;
+}
+
+.home-content h1{
+  color: #fff;
+  font-size: 4rem;
+  padding: 15px 20px;
+  position: absolute;
+  top: 120px; 
+}
+
+.home-content p{
+  color: #fff;
+  font-weight: lighter;
+  padding: 15px 20px;
+  position: absolute;
+  top: 215px;
+}
+
+.home-content button{
+  position: absolute;
+  width: 200px;
+  padding: 15px 30px;
+  top: 280px;
+  left: 20px;
+  background: rgb(153, 29, 255);
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  transition: border .4s ease-in-out;
+}
+
+.home-content button:focus, .home-content button:hover{
+  border: 2px solid #fff;
+}
+
+.home-content button a{
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.home-content button i{
+  color: #fff;
+  font-size: 1rem;
+}
+
+#an1 {
+  inset: 300px 0 0 60px;
+  position: absolute;
+  height: 300px;
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -26,7 +158,10 @@
   grid-column-gap: 0px;
   position: fixed;
   grid-row-gap: 0px;
-  background-color: #1e1d1d;
+  /* background-color: #1e1d1d; */
+  /* background-color: #eceaff; */
+  /* background-color: #c4c4c4; */
+  background-color: #B6BBC4;
 }
 
 /* Navbar */
@@ -40,15 +175,23 @@
   flex-direction: row;
   backdrop-filter: blur(18px) saturate(60%);
   -webkit-backdrop-filter: blur(18px) saturate(60%);
-  background-color: rgba(80, 80, 87, 0.86);
+  /* background-color: rgba(80, 80, 87, 0.86); */
+  background-color: #161A30;
   color: var(--text-color2);
 }
 
 .navbar .header {
-  margin-left: 70px;
+  margin-left: 40px;
   padding: 4px 10px;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-family: "Honk", system-ui;
+  font-size: 3rem;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings:
+    "MORF" 15,
+    "SHLN" 50;
+  cursor: pointer;
 }
 
 .nav {
@@ -86,6 +229,7 @@
 
 #nav-user-pic {
   width: 55px;
+  height: 55px;
   border-radius: 50%;
   padding: 2px;
   background-color: #e5e5e5;
@@ -161,6 +305,7 @@
 
 .sub-menu-wrap .sub-menu .user-info img{
   width: 50px;
+  height: 50px;
   border-radius: 50%;
   padding: 2px;
   background-color: #e5e5e5;
@@ -209,10 +354,11 @@
 }
 
 .sidebar-card {
-  background-color: #fff;
+  background-color: #fdfff5;
   padding: 12px 15px;
-  border-radius: 30px;
+  border-radius: 20px;
   margin-bottom: 20px;
+  border: 1px solid #525252;
 }
 
 .user-info {
@@ -232,6 +378,17 @@
   margin-top: 4px;
   margin-bottom: 10px;
   text-align: center;
+}
+
+.user-info hr{
+  border: 0;
+  background-color: #525252;
+  width: 100%; height: 1px;
+  margin: 10px 0 8px 0;
+}
+
+.user-info h4 a{
+  color: #000;
 }
 
 .topics-list {
@@ -290,21 +447,39 @@
 }
 
 .main .card {
-  background-color: white;
+  background-color: #fdfff5;
   padding: 10px 12px;
   margin: 12px 18px;
-  border-radius: 10px;
+  border-radius: 15px;
+}
+
+.author-info .post-user-pic{
+  width: 50px;
+  height: 50px;
+  padding: 2px;
+  background-color: gainsboro;
+  border-radius: 50%;
+}
+
+.color {
+  padding: 2px 5px;
+  border: 1px solid #525252;
+  background-color: rgb(229, 228, 226);
+  border-radius: 15px;
 }
 
 .color1 {
+  border: 1px solid #525252;
   border-left: 5px solid coral;
 }
 
 .color2 {
+  border: 1px solid #525252;
   border-left: 5px solid rgb(51, 116, 255);
 }
 
 .color3 {
+  border: 1px solid #525252;
   border-left: 5px solid rgb(210, 78, 250);
 }
 
@@ -357,6 +532,17 @@ hr {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   border: 0;
   outline: none;
+  transition: font-weight 0.2s, transform 0.5s;
+}
+
+.card .read-more:hover,
+.card .read-more:focus {
+  font-weight: 600;
+}
+
+.card .read-more:hover i,
+.card .read-more:focus i {
+  transform: translateX(4px);
 }
 
 .read-more a {
@@ -387,4 +573,32 @@ hr {
   color: #fff;
 }
 
+/* notifications for main pages */
+.notification-messages{
+  display: flex;
+  flex-direction: column;
+}
 
+.pop-up-notifications{
+  background-color: #B3C8CF;
+  border: 1.5px solid #0C0C0C;
+  padding: 10px 18px;
+  margin: 12px 18px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification-check {
+  margin-right: 10px;
+}
+
+.notification-close {
+  cursor: pointer;
+}
+
+.notification-check {
+  font-size: 1.2rem;
+}

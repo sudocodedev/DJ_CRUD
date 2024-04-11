@@ -1,3 +1,7 @@
+if(document.getElementById('div_id_isDraft')){
+    document.getElementById('div_id_isDraft').classList.add('form-switch');
+}
+
 function imageUpload(e, imgID) {
     const file = e.target.files[0];
     if(file){
@@ -37,5 +41,31 @@ if(document.getElementById('bg-pic-input')) {
 const bg_pic = document.getElementById('bg-pic-input');
 bg_pic.addEventListener('change', (e) => {
     imageUpload(e,"bg-pic-preview");
+});
+}
+
+//user follow
+//get corresponding profile id
+function getProfileID() {
+    return document.querySelector(".screen").dataset.profileId;
+}
+
+function userFollow(id, holder) {
+    const URL= `/followers/${id}/`;
+    fetch(URL)
+    .then(res => res.json())
+    .then(data => {
+      if(data.followed) {
+        holder.textContent="Unfollow";
+      } else {
+        holder.textContent="Follow"
+      }
+    })
+}
+  
+if(document.querySelector('.user-follow')) {
+    let follow=document.querySelector('.user-follow');
+    follow.addEventListener('click',() => {
+        userFollow(getProfileID(), follow);
 });
 }

@@ -2,6 +2,9 @@ from django import forms
 from .models import post, GenreList, UserProfile
 from django.forms.widgets import SelectMultiple
 from tinymce.widgets import TinyMCE
+from django.contrib.auth.models import User
+from django.db.models.query_utils import Q
+
 
 class Select2MultipleWithPlaceholder(SelectMultiple):
     def __init__(self, placeholder=None, *args, **kwargs):
@@ -17,10 +20,17 @@ class postForm(forms.ModelForm):
 
     class Meta:
         model = post
-        fields = ["image","title","tags","content"]
+        fields = ["image","title","isDraft","tags","content"]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'New post title here...'}),  
             'image': forms.FileInput(attrs={'id': "post-pic-input", 'accept': "image/*"}),
+            'isDraft': forms.CheckboxInput(attrs={
+                'id': 'flexSwitchCheckDefault',
+                'class': 'form-check-input',
+            })
+        }
+        labels = {
+            'isDraft': "Save as Draft ?"
         }
 
 class profileForm(forms.ModelForm):

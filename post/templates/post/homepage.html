@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Anime OTAKU ⚡</title>
+</head>
+<body>
+    <div id="home-bg">
+        <nav class="home-nav">
+            <p class="home-logo">Anime OTAKU</p>
+            <ul>
+                <li><a href="{% url 'post-page' %}">Posts</a></li>
+                <li><a href="#">About</a></li>
+                {% if request.user.is_authenticated %}
+                <button><a href="{% url 'post-page' %}">Sign In</a></button>
+                {% else %}
+                <button><a href="{% url 'login-page' %}">Sign In</a></button>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="home-content">
+            <h1>Become an Anime OTAKU!</h1>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. nesciunt tenetur vitae. Facere ut doloremque eveniet fuga quas!
+            </p>
+            <button><a href="{% url 'post-page' %}">Wanna Dive</a> <i class="fa-solid fa-arrow-right fa-beat"></i></button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+    VANTA.NET({
+    el: "#home-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00
+    })
+    </script>
+</body>
+</html>

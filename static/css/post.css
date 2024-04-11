@@ -2,6 +2,13 @@
     font-family: 'Outfit', sans-serif;
 }
 
+.form-screen{
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.5)), url('https://pixewall.com/wp-content/uploads/2023/04/4k-Engine-Wallpaper.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 .asteriskField {
     display: none;
 }
@@ -97,6 +104,7 @@ input[type="file"]{
 .post-title input::placeholder {
     font-size: 50px;
     font-weight: 600;
+    color: lightslategrey;
 }
 
 .container label {
@@ -125,4 +133,10 @@ input[type="file"]{
 
 .userprofile-form .input-group span {
     padding-top: 5.5px;
+}
+
+#flexSwitchCheckDefault{
+    width: 50px;
+    height: 20px;
+    margin-right: 20px;
 }

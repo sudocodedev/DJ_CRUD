@@ -2,35 +2,45 @@
 
 <div class="main">
 
+    <div class="notification-messages">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="pop-up-notifications">
+            <p class="notification-text"><i class="notification-check fa-solid fa-bell fa-xl" style="color: #d2a80f;"></i> {{ message }}</p>
+            <i class="notification-close fa-solid fa-xmark fa-xl"></i>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    
     {% if request.user.is_authenticated %}
     <div class="post-create">
         <button type="submit"><a href="{% url 'create-post' %}"><i class="fa-solid fa-square-plus"></i> CREATE</a></button>
     </div>
-    {% endif%}
-
-    {% if post_count %}
-    <h5 class="search-result">Found {{ post_count }} post(s)...</h5>
-    {% endif %}
-    <br>
+    {% endif%}   
     {% for post in posts %}
     <div class="card {% cycle 'color1' 'color2' 'color3' %}">
         <div class="author-info grid">
-            <div class="image">
-                <i class="fa-solid fa-user fa-2xl"></i>
-            </div>
+            <img class="post-user-pic" src="{{ post.author.profile_info.profileImg.url }}" alt="user-pic">
             <div class="info-container">
                 <div class="author"><small>{{ post.author }}</small></div>
                 <div class="date-posted"><small>{{ post.date_posted | date:"M j,y" }}</small></div>
             </div>
         </div>
         <h1 class="title">{{ post.title }}</h1>
-        <div class="post-details flex">
-            <!-- <div class="genre"><i class="fa-solid fa-tag"></i> {{ post.genre }}</div>        -->
-            <!-- <div class="rating"><i class="fa-solid fa-star"></i> {{post.ratings}}</div> -->
+        <ul style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 20px;">
+        {% for tag in post.tags.all %}
+            <li class="color">#{{ tag }}</li>
+        {% endfor %}
+        </ul>
+        <p class="content">{{ post.content|safe|truncatewords:25 }}</p>
+        <div class="flex" style="flex-direction: row; align-items: center; justify-content: flex-start; gap: 40px;">
+            <div class="post-details flex">
+                <p class="genre" style="color: #808080;"><i class="fa-regular fa-heart"></i> {{ post.likes.count }}</p>    
+                <p class="genre" style="color: #808080;"><i class="fa-regular fa-comment"></i> {{post.comments.count }}</p>
+            </div>
+            <button style="margin-right: 100px;" class="read-more" type="submit"><a href="{% url 'detailed-post' post.id %}">Read More <i class="fa-solid fa-arrow-right"></i></a></button>
         </div>
-        <hr>
-        <p class="content">{{ post.content|truncatewords:25 }}</p>
-        <button class="read-more" type="submit"><a href="{% url 'detailed-post' post.id %}">Read More <i class="fa-solid fa-arrow-right"></i></a></button>
     </div>
     {% endfor %}
 </div>

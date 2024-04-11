@@ -1,14 +1,14 @@
 {% load static %}
 
 <div class="sidebar">
-    {% if request.user.is_authenticated %}
-    <div class="user-info sidebar-card">
-        <h4>Hi <a href="{% url 'userprofile-view' profile.id %}">{{ request.user }}</a>!!</h4>
-        <small>Welcome Back 😄</small>
-        <hr>
-        <span>Followers: <strong>{{ profile.followers.count }}</strong></span>
-        <span>Following: <strong>{{ following }}</strong></span>
-    </div>
+    {% if check and request.user.is_authenticated %}
+        <div class="user-info sidebar-card">
+            <h4>Hi <a href="{% url 'userprofile-view' profile.id %}">{{ request.user }}</a> !!</h4>
+            <small>Welcome Back 😄</small>
+            <hr>
+            <span>Followers: <strong>{{ profile.followers.count }}</strong></span>
+            <span>Following: <strong>{{ following }}</strong></span>
+        </div>
     {% endif %}
     <div class="controls sidebar-card">
         <h3><i class="fa-solid fa-chart-line fa-bounce" style="margin-left: 10px;"></i>  Trending</h3>

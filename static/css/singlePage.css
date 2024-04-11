@@ -92,7 +92,7 @@
   border-radius: 10px;
   width: 500px;
   height: 250px;
-  padding: 20px 20px;
+  padding: 10px 20px;
 }
 
 .modal-content .close {
@@ -108,7 +108,7 @@
 .modal-content form {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .modal-content .confirm {
-  padding: 10px 15px;
+  padding: 5px 8px;
   font-size: 1.2rem;
   background-color: rgb(58, 77, 245);
   border: 2px solid rgb(3, 1, 95);
@@ -127,7 +127,7 @@
 }
 
 .modal-content .cancel {
-  padding: 10px 15px;
+  padding: 5px 8px;
   font-size: 1.2rem;
   background-color: rgb(231, 45, 45);
   border: 2px solid rgb(126, 0, 0);
@@ -136,6 +136,7 @@
 
 form a {
   color: #fff;
+  text-decoration: none;
 }
 
 /* single post styling */

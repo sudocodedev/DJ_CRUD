@@ -45,6 +45,7 @@
             <div class="post-title mb-4 mt-4">
                 {{form.title}}
             </div>
+            {{ form.isDraft|as_crispy_field }}
             {{form.tags|as_crispy_field}}
             {{form.content|as_crispy_field}}
             <button type="submit" class="mb-4 btn btn-success">Submit</button>

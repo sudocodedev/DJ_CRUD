@@ -71,7 +71,7 @@
                     <div class="back"><a href="{{ request.META.HTTP_REFERER }}"><i class="fa-solid fa-arrow-left fa-xl"></i></a></div>
                     <div class="post-details">
                         <h2>{{ post.title }}</h2>
-                        <h5>posted by {{ post.author }} on {{ post.date_posted | date:"M, jS Y" }}</h5>
+                        <h5>posted by <strong><a href="{% url 'userprofile-view' post.author.profile_info.id %}" style="text-decoration: none; color: #fff;">{{ post.author }}</a></strong> on {{ post.date_posted | date:"M, jS Y" }}</h5>
                     </div>
                     {% if request.user == post.author %}
                     <div class="operations">
@@ -80,6 +80,14 @@
                     </div>
                     {% endif %}
                 </div>
+            </section>
+
+            <section class="taglist">
+                <ul>
+                    {% for tag in post.tags.all %}
+                        <li class="color {% cycle 'color1' 'color2' 'color3' 'color4' %}">#{{ tag }}</li>
+                    {% endfor %}
+                </ul>
             </section>
 
             <section class="content" data-post-id="{{post.id}}">

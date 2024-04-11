@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('',views.homePage,name='home-page'),
     path('posts/',views.postPage,name='post-page'),
     path('create-post/',views.createPost,name='create-post'),
     path('update-post/<int:postid>',views.updatePost,name='update-post'),
@@ -18,6 +19,8 @@ urlpatterns = [
     path('post-status/<int:postid>/',views.statusCheck, name='post-status'),
     path('trending-posts/',views.top3Posts, name='top-3-posts'),
     path('view-profile/<int:profileid>/',views.UserProfileView, name='userprofile-view'),
+    path('followers/<int:profileid>/',views.followUser, name='user-follow'),
+    path('pwd-change/',views.changePassword,name='change-password'),
 ]
 
 if settings.DEBUG:

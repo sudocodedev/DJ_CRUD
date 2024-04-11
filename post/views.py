@@ -7,6 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.core.serializers.json import Serializer
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.forms import SetPasswordForm
+
+
+def homePage(request):
+    return render(request,'post/homepage.html')
 
 def UserProfileView(request, profileid):
     uprofile=UserProfile.objects.get(id=profileid)
@@ -22,6 +28,13 @@ def UserProfileView(request, profileid):
     followers=uprofile.followers.count()
     post_published=l_user.post_set.count()
 
+    #getting bookmarks for that particular user
+    bookmarks=l_user.bookmarked_post.all() if post_bookmarked>0 else "No Bookmarks Found 🤷🏻‍♂️"
+
+    #getting drafted posts from the particular user
+    drafted_posts=post.objects.filter(Q(author__id=l_user.id) & Q(isDraft=True)).order_by('-date_modified','-date_posted')
+    draft_counts=drafted_posts.count()
+
     stats = {
         'post_liked': post_liked,
         'post_commented': post_commented,
@@ -30,6 +43,9 @@ def UserProfileView(request, profileid):
         'comments_received': comments_received['tot_comments'],
         'followers': followers,
         'post_published': post_published,
+        'bookmarks': bookmarks,
+        'draft_counts': draft_counts,
+        'drafts': drafted_posts if draft_counts>0 else "No Drafts Found 🤷🏻‍♂️",
     }
 
     context={'user': uprofile, 'following': following, 'stats': stats}
@@ -50,6 +66,18 @@ def likePost(request, postid):
         liked=True
         post_likes.likes.add(request.user)
     return JsonResponse({'liked':liked, 'like_count':post_likes.likes.count()})
+
+#follow user
+@login_required(login_url='login-page')
+def followUser(request, profileid):
+    lprofile=get_object_or_404(UserProfile,id=profileid)
+    if request.user in lprofile.followers.all():
+        followed=False
+        lprofile.followers.remove(request.user)
+    else:
+        followed=True
+        lprofile.followers.add(request.user)
+    return JsonResponse({'followed':followed})
 
 #bookmark a post for future reference
 @login_required(login_url='login-page')
@@ -134,20 +162,37 @@ def PostComment(request,postid):
 #read all posts
 def postPage(request):
     cache=request.GET #copy get request in a placeholder
+    
     #getting the query parameters
-    search=cache.get('search') if cache.get('search') != None else ''
-    genre=cache.get('genre') if cache.get('genre') != None else ''
+    psearch=cache.get('search') if cache.get('search') != None else ''
+    pgenre=cache.get('genre') if cache.get('genre') != None else ''
+ 
     #query the db model
-    posts=post.objects.filter(
-        Q(genre__icontains=genre) |
-        Q(author__username__icontains=search) |
-        Q(title__icontains=search) |
-        Q(content__icontains=search)
-    )
-    l_user=User.objects.get(id=request.user.id)
-    uprofile=UserProfile.objects.get(user=l_user)
-    following=User.objects.get(id=uprofile.user.id).following.count()
-    context={'posts':posts, 'profile':uprofile, 'following':following}
+    if pgenre != '':
+        posts=post.objects.filter(
+            Q(isDraft=False) &
+            Q(tags__name__icontains=pgenre)
+        )
+    else:
+        posts=post.objects.filter(
+            Q(isDraft=False) & 
+            (
+                Q(author__username__icontains=psearch) |
+                Q(title__icontains=psearch) |
+                Q(content__icontains=psearch)
+            )
+        )
+    print(posts.count(), posts.filter(title__icontains='naruto').count())
+
+    user_check= True if User.objects.filter(id=request.user.id).exists() else False
+    if user_check:
+        l_user=User.objects.get(id=request.user.id)
+        uprofile=UserProfile.objects.get(user=l_user)
+        following=User.objects.get(id=uprofile.user.id).following.count()
+    else:
+        uprofile=None
+        following=0
+    context={'posts':posts, 'check':user_check, 'profile':uprofile, 'following':following}
     return render(request,'post/index.html',context)
 
 #create post
@@ -223,6 +268,24 @@ def statusCheck(request,postid):
     except:
         raise "post not found!!"
     return JsonResponse({'like_check':like_check, 'bookmark_check': bookmark_check})
+
+# Enables logged in user to reset their password
+@login_required(login_url='login-page')
+def changePassword(request):
+    if request.method == "POST":
+        form=SetPasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your password has been changed successfully")
+            redirect('login-page')
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request,error)
+    form=SetPasswordForm(request.user)
+    context={'form':form}
+    return render(request,'post/reset-password.html',context)
+
+
 
 
     
