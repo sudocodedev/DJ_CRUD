@@ -61,7 +61,7 @@ def resetPassword(request):
                     'uid': urlsafe_base64_encode(force_bytes(get_user.id)),
                     'token': account_activation_token.make_token(get_user),
                 }
-                message=render_to_string('authentication/template_activate_account.html',context)
+                message=render_to_string('authentication/template_reset_password.html',context)
 
                 reset_email=EmailMessage(mail_subject,message,to=[get_user.email])
                 print("about to send mail 2")
@@ -111,14 +111,6 @@ def activateEmail(request, user, to_email):
         'token': account_activation_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http',
     }
-    # sending only text based email template
-    # message=render_to_string('authentication/template_activate_account.html',{
-    #     'user': user.username,
-    #     'domain': get_current_site(request).domain,
-    #     'uid': urlsafe_base64_encode(force_bytes(user.id)),
-    #     'token': account_activation_token.make_token(user),
-    #     'protocol': 'https' if request.is_secure() else 'http',        
-    # })
 
     #rendering with custom email template
     message=get_template('authentication/template_activate_account.html').render(context)
@@ -126,7 +118,7 @@ def activateEmail(request, user, to_email):
     email=EmailMessage(mail_subject, message, to=[to_email])
 
     if email.send():
-        messages.success(request,'Dear <b>{user}</b>, an email has been sent to {to_email} ✅, kindly click to confirm your account registration')
+        messages.success(request,'Dear {user.username}, an email has been sent to {to_email} ✅, kindly click to confirm your account registration')
     else:
         messages.error(request,f"problem in sending mail to {to_email}")
 

@@ -368,14 +368,14 @@ textarea:focus {
 
 .comment-section {
   background-color: #89cff0;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   padding-top: 20px;
 }
 
 .comment-section .post-comment {
   background-color: #0b415a;
-  padding-bottom: 20px;
-  margin-bottom: 1.1rem;
+  padding-bottom: 15px;
+  margin-bottom: 1rem;
   border-radius: 10px;
 }
 
@@ -385,29 +385,44 @@ textarea:focus {
 
 .comment-section .load-comments .comment-block {
   background-color: #faf9f6;
-  margin: 1.2rem;
-  padding: 12px 15px;
+  margin: 1rem;
+  padding: 5px 8px 5px 8px;
   border-radius: 10px;
+}
+
+.comment-block{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
 }
 
 .comment-block .user {
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .comment-block .timestamp {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: #808080;
 }
 
 .comment-block p {
-  margin-top: 1rem;
+  margin-top: 0.4rem;
   color: #303234;
+}
+
+.comment-block-info{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: flex-start;
+  /* gap: 12px; */
 }
 
 .comment-reply {
   color: #808080;
-  margin: 0.75rem 0 0.3rem 0;
+  /* margin: 0.75rem 0 0.3rem 0; */
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

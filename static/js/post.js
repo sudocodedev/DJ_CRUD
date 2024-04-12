@@ -52,6 +52,7 @@ function getProfileID() {
 
 function userFollow(id, holder) {
     const URL= `/followers/${id}/`;
+    let followers_count=document.querySelector('.followers');
     fetch(URL)
     .then(res => res.json())
     .then(data => {
@@ -60,12 +61,27 @@ function userFollow(id, holder) {
       } else {
         holder.textContent="Follow"
       }
+      followers_count.textContent=data.count;
     })
 }
-  
+
+function ProfileStatusCheck(id){
+    const URL = `/profile-status/${id}/`;
+    fetch(URL)
+    .then(res => res.json())
+    .then(data => {
+        document.querySelector('.followers').textContent=data.count;
+        document.querySelector('.user-follow').textContent=data.content;
+    })
+}
+
 if(document.querySelector('.user-follow')) {
     let follow=document.querySelector('.user-follow');
     follow.addEventListener('click',() => {
         userFollow(getProfileID(), follow);
 });
+}
+
+if(document.querySelector('.screen')){
+    ProfileStatusCheck(getProfileID());
 }

@@ -20,6 +20,7 @@ urlpatterns = [
     path('trending-posts/',views.top3Posts, name='top-3-posts'),
     path('view-profile/<int:profileid>/',views.UserProfileView, name='userprofile-view'),
     path('followers/<int:profileid>/',views.followUser, name='user-follow'),
+    path('profile-status/<int:profileid>/',views.ProfileStatusCheck, name='profile-status'),
     path('pwd-change/',views.changePassword,name='change-password'),
 ]
 

@@ -233,19 +233,19 @@ function LoadComments() {
     .then((res) => res.json())
     .then((data) => {
       let comments = JSON.parse(data);
-      let info = `<h3 style="font-weight:bold; font-size: 2rem; padding: 5px;">Comments (${comments.length})</h3>`;
+      console.log(comments)
+      let info = `<h3 style="font-weight:bold; font-size: 1.5rem; padding: 5px;">Comments (${comments.length})</h3>`;
       comments.forEach((comment) => {
         info += `
             <div class="comment-block">
-                <span class="user">${comment["fields"]["user"]}</span> • <span class="timestamp">${comment["fields"]["str_comment_posted"]}</span>
-                <br>
-                <p>${comment["fields"]["body"]}</p>
-                <div class="comment-reply">
-                    <div><i class="fa-regular fa-heart like-button" data-post-id=""></i><span>0</span></div>
-                    <div><i class="fa-regular fa-comment"></i><span>0</span></div>                    
-                    <div>Reply</div>
+              <img src="${comment['fields']['profile_pic_link']}" class='comment-user-pic' style="height: 40px; width: 40px; border-radius: 50%;">
+              <span class="comment-block-info">
+                <div>
+                  <span class="user">${comment["fields"]["user"]}</span> • <span class="timestamp">${comment["fields"]["str_comment_posted"]}</span>
                 </div>
-            </div>
+                <p>${comment["fields"]["body"]}</p>
+              </span>
+            </div>            
         `;
       });
       comment_section.innerHTML = info;

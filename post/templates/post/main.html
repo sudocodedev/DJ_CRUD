@@ -20,13 +20,15 @@
     {% endif%}   
     {% for post in posts %}
     <div class="card {% cycle 'color1' 'color2' 'color3' %}">
-        <div class="author-info grid">
-            <img class="post-user-pic" src="{{ post.author.profile_info.profileImg.url }}" alt="user-pic">
-            <div class="info-container">
-                <div class="author"><small>{{ post.author }}</small></div>
-                <div class="date-posted"><small>{{ post.date_posted | date:"M j,y" }}</small></div>
+        <a style="color:#333; text-decoration: none;" href="{% url 'userprofile-view' post.author.profile_info.id %}">
+            <div class="author-info grid">
+                <img class="post-user-pic" src="{{ post.author.profile_info.profileImg.url }}" alt="user-pic">
+                <div class="info-container">
+                    <div class="author"><small>{{ post.author }}</small></div>
+                    <div class="date-posted"><small>{{ post.date_posted | date:"M j,y" }}</small></div>
+                </div>
             </div>
-        </div>
+        </a>
         <h1 class="title">{{ post.title }}</h1>
         <ul style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 20px;">
         {% for tag in post.tags.all %}

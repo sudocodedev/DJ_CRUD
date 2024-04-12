@@ -26,7 +26,7 @@ def UserProfileView(request, profileid):
     likes_received=l_user.post_set.aggregate(tot_likes=Count('likes'))
     comments_received=l_user.post_set.aggregate(tot_comments=Count('comments'))
     followers=uprofile.followers.count()
-    post_published=l_user.post_set.count()
+    post_published=l_user.post_set.filter(isDraft=False).count()
 
     #getting bookmarks for that particular user
     bookmarks=l_user.bookmarked_post.all() if post_bookmarked>0 else "No Bookmarks Found 🤷🏻‍♂️"
@@ -77,7 +77,11 @@ def followUser(request, profileid):
     else:
         followed=True
         lprofile.followers.add(request.user)
-    return JsonResponse({'followed':followed})
+
+    return JsonResponse({
+        'followed':followed,
+        'count': lprofile.followers.count(),
+    })
 
 #bookmark a post for future reference
 @login_required(login_url='login-page')
@@ -143,9 +147,12 @@ class CommentSerializer(Serializer):
 #Loads all the comments for a requested post
 def LoadComments(request,postid):
     targetPost=post.objects.get(id=postid)
+
+    # queryset=targetPost.comments.values('post','user','body','comment_posted','user__profile_info__profileImg')
     queryset=targetPost.comments.all()
     serializers=CommentSerializer()
-    serialized_data=serializers.serialize(queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted','str_comment_posted'])
+    serialized_data=serializers.serialize(queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted','str_comment_posted','profile_pic_link'])
+    
     return JsonResponse(serialized_data,safe=False,status=200)
 
 #post the comment for the corresponding post
@@ -261,6 +268,10 @@ def detailedPost(request,postid):
     return render(request,'post/singlepost.html',context)
 
 def statusCheck(request,postid):
+    '''
+    used to fetch the status of likes, bookmarks of the particular user 
+    who have logged in during initial load of the page
+    '''
     try:
         detailed_post=post.objects.get(id=postid)
         like_check= True if request.user in detailed_post.likes.all() else False;
@@ -268,6 +279,20 @@ def statusCheck(request,postid):
     except:
         raise "post not found!!"
     return JsonResponse({'like_check':like_check, 'bookmark_check': bookmark_check})
+
+
+def ProfileStatusCheck(request,profileid):
+    '''
+    used to fetch the status of followers & their counts for the
+    particular user who have logged in during initial load of the page
+    '''
+    try:
+        lprofile=UserProfile.objects.get(id=profileid)
+        count=lprofile.followers.count()
+        content= 'Unfollow' if request.user in lprofile.followers.all() else 'Follow'
+    except:
+        raise "profile not found"
+    return JsonResponse({'count':count, 'content': content})
 
 # Enables logged in user to reset their password
 @login_required(login_url='login-page')

@@ -1,14 +1,10 @@
 {% autoescape off %}
 Hi {{ user.username }},
 
-We have received a request from your account for password reset.
+Thanks for begin a part of Anime OTAKU, lets dive and experience the anime craze to next level!!
 
-To initiate password reset process, click the below link
-{{protocol}}://{{domain}}{% url 'reset-confirm' uidb64=uid token=token %}
-
-The above link will be valid for one time, if you want to again reset the password visit {{protocol}}://{{domain}}
-
-If you haven't requested, Kindly ignore this mail.
+Click the below link for you account confirmation,
+{{protocol}}://{{domain}}{% url 'activate' uidb64=uid token=token %}
 
 Cheers✌🏻 ,
 Team Anime OTAKU 
