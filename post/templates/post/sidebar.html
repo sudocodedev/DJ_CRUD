@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="sidebar">
-    {% if check and request.user.is_authenticated %}
+    {% if profile and check and request.user.is_authenticated %}
         <div class="user-info sidebar-card">
             <h4>Hi <a href="{% url 'userprofile-view' profile.id %}">{{ request.user }}</a> !!</h4>
             <small>Welcome Back 😄</small>

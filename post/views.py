@@ -10,9 +10,41 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import SetPasswordForm
 
+from django.views.decorators.csrf import csrf_exempt
+import os
+from django.conf import settings
+from uuid import uuid4
+
 
 def homePage(request):
     return render(request,'post/homepage.html')
+
+
+#enables user to upload images via tinyMCE editor for their post
+@csrf_exempt
+def UploadImage(request):
+    if request.method != "POST":
+        return JsonResponse({'message': "wrong request"})
+
+    file_obj = request.FILES['file']
+    print(file_obj)
+    file_name_suffix = file_obj.name.split('.')[-1]
+
+    if file_name_suffix not in ['jpeg','jpg','gif','png']:
+        return JsonResponse({'message':f'wrong file suffix - {file_name_suffix}. It should be .jpg, .gif, .jpeg, .png'})
+
+    file_path=os.path.join(settings.MEDIA_ROOT,'post_content_images',file_obj.name)
+
+    if os.path.exists(file_path):
+        file_obj.name=str(uuid4) + '.' + file_name_suffix
+
+    with open(file_path, 'wb+') as f:
+        for chunk in file_obj.chunks():
+            f.write(chunk)
+
+        return JsonResponse({'message': "image uploaded successfully!",
+            'location': os.path.join(settings.MEDIA_URL,'post_content_images', file_obj.name)
+        })
 
 def UserProfileView(request, profileid):
     uprofile=UserProfile.objects.get(id=profileid)
@@ -152,7 +184,7 @@ def LoadComments(request,postid):
     queryset=targetPost.comments.all()
     serializers=CommentSerializer()
     serialized_data=serializers.serialize(queryset,use_natural_foreign_keys=True,fields=['post','user','body','comment_posted','str_comment_posted','profile_pic_link'])
-    
+
     return JsonResponse(serialized_data,safe=False,status=200)
 
 #post the comment for the corresponding post
@@ -169,11 +201,11 @@ def PostComment(request,postid):
 #read all posts
 def postPage(request):
     cache=request.GET #copy get request in a placeholder
-    
+
     #getting the query parameters
     psearch=cache.get('search') if cache.get('search') != None else ''
     pgenre=cache.get('genre') if cache.get('genre') != None else ''
- 
+
     #query the db model
     if pgenre != '':
         posts=post.objects.filter(
@@ -182,23 +214,24 @@ def postPage(request):
         )
     else:
         posts=post.objects.filter(
-            Q(isDraft=False) & 
+            Q(isDraft=False) &
             (
                 Q(author__username__icontains=psearch) |
                 Q(title__icontains=psearch) |
                 Q(content__icontains=psearch)
             )
         )
-    print(posts.count(), posts.filter(title__icontains='naruto').count())
 
     user_check= True if User.objects.filter(id=request.user.id).exists() else False
     if user_check:
         l_user=User.objects.get(id=request.user.id)
-        uprofile=UserProfile.objects.get(user=l_user)
-        following=User.objects.get(id=uprofile.user.id).following.count()
-    else:
-        uprofile=None
-        following=0
+        try:
+            uprofile=UserProfile.objects.get(user=l_user)
+            following=User.objects.get(id=uprofile.user.id).following.count()
+        except:
+            uprofile=None
+            following=0
+
     context={'posts':posts, 'check':user_check, 'profile':uprofile, 'following':following}
     return render(request,'post/index.html',context)
 
@@ -254,10 +287,10 @@ def deletePost(request,postid):
 
 #detailed post
 def detailedPost(request,postid):
-    try:    
+    try:
         detailed_post=post.objects.get(id=postid)
         queryset=detailed_post.comments.count()
-        user_info=request.user.id    
+        user_info=request.user.id
     except:
         raise "Requested post not found!!"
     context={
@@ -269,7 +302,7 @@ def detailedPost(request,postid):
 
 def statusCheck(request,postid):
     '''
-    used to fetch the status of likes, bookmarks of the particular user 
+    used to fetch the status of likes, bookmarks of the particular user
     who have logged in during initial load of the page
     '''
     try:
@@ -313,4 +346,4 @@ def changePassword(request):
 
 
 
-    
+

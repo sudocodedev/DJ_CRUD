@@ -8,7 +8,12 @@
             <input type="text" name="search" id="searchbar" placeholder="search for posts...">
         </form>
         {% if check and request.user.is_authenticated %}
-            <img id="nav-user-pic" src="{{ profile.profileImg.url }}" alt="user-pic">
+            {% if not profile %}
+                <img id="nav-user-pic" src="{% static 'img/signup.png' %}" alt="user-pic">
+            {% else %}
+                <img id="nav-user-pic" src="{{ profile.profileImg.url }}" alt="user-pic">
+            {% endif %}
+
         {% else %}
             <button class="login"><a href="{% url 'login-page' %}">Login</a></button>
         {% endif %}
@@ -16,7 +21,14 @@
     {% if check and request.user.is_authenticated %}
         <div class="sub-menu-wrap" id="subMenu">
             <div class="sub-menu">
-                <div class="user-info">
+                {% if not profile %}
+                <a href="{% url 'create-profile' %}" class="sub-menu-link">
+                    <i class="dd-icon fa-solid fa-user"></i>
+                    <p>Create Profile</p>
+                    <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
+                </a>
+                {% else %}
+                <div class="user-info"></div>
                     <img src="{{ profile.profileImg.url }}" alt="user pic">
                     <h4>{{ profile.firstName }} {{ profile.lastName }}</h4>
                 </div>
@@ -26,6 +38,8 @@
                     <p>View Profile</p>
                     <span><i class="dd-arrow fa-solid fa-angle-down fa-rotate-270"></i></span>
                 </a>
+                {% endif %}
+
                 <a href="#" class="sub-menu-link">
                     <i class="dd-icon fa-solid fa-gear"></i>
                     <p>Settings & Privacy</p>

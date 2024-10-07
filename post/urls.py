@@ -22,6 +22,7 @@ urlpatterns = [
     path('followers/<int:profileid>/',views.followUser, name='user-follow'),
     path('profile-status/<int:profileid>/',views.ProfileStatusCheck, name='profile-status'),
     path('pwd-change/',views.changePassword,name='change-password'),
+    path('create-post/upload_image',views.UploadImage, name="upload-image"),
 ]
 
 if settings.DEBUG:

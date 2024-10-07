@@ -3,6 +3,12 @@
 <div class="main">
 
     <div class="notification-messages">
+        {% if not profile %}
+        <div class="pop-up-notifications">
+            <p class="notification-text"><i class="notification-check fa-solid fa-bell fa-xl" style="color: #d2a80f;"></i> Profile creation is <b>still pending</b>, please rightaway!</p>
+            <i class="notification-close fa-solid fa-xmark fa-xl"></i>
+        </div>
+    {% endif %}
         {% if messages %}
         {% for message in messages %}
         <div class="pop-up-notifications">
@@ -12,12 +18,12 @@
         {% endfor %}
         {% endif %}
     </div>
-    
+
     {% if request.user.is_authenticated %}
     <div class="post-create">
         <button type="submit"><a href="{% url 'create-post' %}"><i class="fa-solid fa-square-plus"></i> CREATE</a></button>
     </div>
-    {% endif%}   
+    {% endif%}
     {% for post in posts %}
     <div class="card {% cycle 'color1' 'color2' 'color3' %}">
         <a style="color:#333; text-decoration: none;" href="{% url 'userprofile-view' post.author.profile_info.id %}">
@@ -35,10 +41,9 @@
             <li class="color">#{{ tag }}</li>
         {% endfor %}
         </ul>
-        <p class="content">{{ post.content|safe|truncatewords:25 }}</p>
         <div class="flex" style="flex-direction: row; align-items: center; justify-content: flex-start; gap: 40px;">
             <div class="post-details flex">
-                <p class="genre" style="color: #808080;"><i class="fa-regular fa-heart"></i> {{ post.likes.count }}</p>    
+                <p class="genre" style="color: #808080;"><i class="fa-regular fa-heart"></i> {{ post.likes.count }}</p>
                 <p class="genre" style="color: #808080;"><i class="fa-regular fa-comment"></i> {{post.comments.count }}</p>
             </div>
             <button style="margin-right: 100px;" class="read-more" type="submit"><a href="{% url 'detailed-post' post.id %}">Read More <i class="fa-solid fa-arrow-right"></i></a></button>

@@ -231,6 +231,10 @@ form a {
   background-color: #fff;
 }
 
+.content .container img{
+  border-radius: 10px;
+}
+
 .back a {
   color: #fff;
 }

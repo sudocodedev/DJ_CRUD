@@ -38,7 +38,7 @@ def confirmResetPassword(request,uidb64,token):
         return render(request, 'post/reset-password.html',{'form':form})
     else:
         messages.error(request,"Link got expired, try again...")
-    
+
     messages.error(request,"Something went wrong, redirecting to home page!")
     return redirect('post-page')
 
@@ -75,7 +75,7 @@ def resetPassword(request):
                     """
                     )
                 else:
-                    messages.error(request,"Sorry😞, we are unable to send password reset mail due to <b>SERVER ISSUE</b>")  
+                    messages.error(request,"Sorry😞, we are unable to send password reset mail due to <b>SERVER ISSUE</b>")
         return redirect('post-page')
     form=PasswordResetForm()
 
@@ -90,7 +90,7 @@ def activate(request, uidb64, token):
         user=User.objects.get(pk=uid)
     except (TypeError,  ValueError, OverflowError, User.DoesNotExist):
         user=None
-    
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active=True
         user.save()
@@ -98,7 +98,7 @@ def activate(request, uidb64, token):
         return redirect('login-page')
     else:
         messages.error(request,"Activation link was invalid, try again!!")
-    
+
     return redirect('post-page')
 
 def activateEmail(request, user, to_email):
@@ -146,13 +146,13 @@ def loginUser(request):
     if request.method=="POST":
         username=request.POST.get('username','').lower()
         password=request.POST.get('password','').lower()
-    
+
         #checking whether the user object exists in the DB
         try:
             user=User.objects.get(username=username)
         except:
             messages.error(request,"User doesn't exist")
-        
+
         #Authenticating user credentials
         user=authenticate(request, username=username, password=password)
         print(user)
