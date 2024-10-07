@@ -1,0 +1,12 @@
+name: djcrud
+
+services:
+  app:
+    container_name: djcrud
+    build:
+      context: .
+    ports:
+      - "8002:8002"
+    volumes:
+      - .:/app
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
