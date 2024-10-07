@@ -145,8 +145,8 @@ def loginUser(request):
     username,password='',''
     if request.method=="POST":
         username=request.POST.get('username','').lower()
-        password=request.POST.get('password','').lower()
-
+        password=request.POST.get('password','')
+        print(username, password)
         #checking whether the user object exists in the DB
         try:
             user=User.objects.get(username=username)
@@ -156,8 +156,7 @@ def loginUser(request):
         #Authenticating user credentials
         user=authenticate(request, username=username, password=password)
         print(user)
-        print(request)
-        if user is not None:
+        if user:
             login(request,user)
             print("{} has been logged in successfully".format(username))
             return redirect('post-page')

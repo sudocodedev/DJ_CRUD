@@ -3,12 +3,12 @@
 <div class="main">
 
     <div class="notification-messages">
-        {% if not profile %}
+        {% if not request.user.is_authenticated and not profile %}
         <div class="pop-up-notifications">
             <p class="notification-text"><i class="notification-check fa-solid fa-bell fa-xl" style="color: #d2a80f;"></i> Profile creation is <b>still pending</b>, please rightaway!</p>
             <i class="notification-close fa-solid fa-xmark fa-xl"></i>
         </div>
-    {% endif %}
+        {% endif %}
         {% if messages %}
         {% for message in messages %}
         <div class="pop-up-notifications">

@@ -223,6 +223,7 @@ def postPage(request):
         )
 
     user_check= True if User.objects.filter(id=request.user.id).exists() else False
+    uprofile = following = None
     if user_check:
         l_user=User.objects.get(id=request.user.id)
         try:

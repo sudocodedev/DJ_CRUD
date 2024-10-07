@@ -105,11 +105,18 @@ Open your browser and go to `http://127.0.0.1:8000/` to start using the blogging
 
 ## 🖼️ Screenshots
 
-![Post Creation](screenshots/post-creation.png)
-*Post creation page with TinyMCE editor.*
 
-![Post Listing](screenshots/post-listing.png)
+![Post Listing](screenshots/dj_crud_post_page.png)
 *Main page with trending posts and tag filtering.*
 
-![User Dashboard](screenshots/user-dashboard.png)
+![Post Page](screenshots/post_page1.png)
+*Main page with trending posts and tag filtering.*
+
+![Edit Post Page](screenshots/post_page2.png)
+*Main page with trending posts and tag filtering.*
+
+![Comment Section](screenshots/comment-section.png)
+*Main page with trending posts and tag filtering.*
+
+![User Dashboard](screenshots/profile_page1.png)
 *User dashboard showing post engagement stats.*
